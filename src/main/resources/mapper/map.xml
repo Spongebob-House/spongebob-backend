@@ -43,6 +43,7 @@
 		<if test="year != null and month != null and !year.equals('') and !month.equals('')">
 			and dealYear = #{year} and dealMonth = #{month} 
 		</if>
+		order by dealYear desc, dealMonth desc
 		limit 20 
 	</select>
 	
