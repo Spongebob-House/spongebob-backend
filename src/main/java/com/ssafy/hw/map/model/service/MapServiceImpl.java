@@ -12,7 +12,7 @@ import com.ssafy.hw.map.model.HospitalDto;
 import com.ssafy.hw.map.model.InterDto;
 import com.ssafy.hw.map.model.MapDto;
 import com.ssafy.hw.map.model.MetroDto;
-import com.ssafy.hw.map.model.StarbucksDto;
+import com.ssafy.hw.map.model.StarBucksDto;
 import com.ssafy.hw.map.model.mapper.MapMapper;
 @Service
 public class MapServiceImpl implements MapService {//여기서 무엇을 하느냐?
@@ -65,9 +65,9 @@ public class MapServiceImpl implements MapService {//여기서 무엇을 하느�
 	}
 
 	@Override
-	public StarbucksDto getCoffeeDto(String lat, String lng) throws SQLException {
+	public StarBucksDto getCoffeeDto(String lat, String lng) throws SQLException {
 		// TODO Auto-generated method stub
-		StarbucksDto coffee = mapMapper.getCoffee(lat,lng);
+		StarBucksDto coffee = mapMapper.getCoffee(lat,lng);
 		if(coffee!=null)
 			coffee.setDist(getDist(lat,lng,coffee.getLat(),coffee.getLng()));
 		return coffee;
