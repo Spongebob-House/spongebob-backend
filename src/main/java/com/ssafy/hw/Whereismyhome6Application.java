@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.ssafy"})
+@ComponentScan(basePackages = { "com.ssafy" })
 public class Whereismyhome6Application {
 
 	public static void main(String[] args) {
