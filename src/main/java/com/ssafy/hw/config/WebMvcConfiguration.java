@@ -18,7 +18,7 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 import com.ssafy.hw.interceptor.ConfirmInterceptor;
 
 @Configuration
-//@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy
 @MapperScan(basePackages = { "com.ssafy.**.mapper" })
 public class WebMvcConfiguration implements WebMvcConfigurer {
 

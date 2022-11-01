@@ -53,7 +53,7 @@
       	 <button class="btn-inter btn btn-warning" data-no="${inter.dongCode }" type="button">${inter.dongName } <a href="${root }/map/delinter?dong=${inter.dongCode}">X</a></button>
       </c:forEach>      
       </div>
-      <form id="inter-form" method="GET" action="${root }/map/addinter">
+      <form id="inter-form" method="POST" action="${root }/map/addinter">
       	<input type="hidden" id="ndong" name="dong" value=""/>
       </form>
       </section>
