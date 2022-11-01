@@ -11,19 +11,16 @@ import com.ssafy.hw.member.model.MemberDto;
 @Mapper
 public interface MemberMapper {
 
-	int idCheck(String userId) throws SQLException;
+	int idCheck(String userId) throws Exception; // 아이디 중복검사
 
-	void joinMember(MemberDto memberDto) throws SQLException;
+	int joinMember(MemberDto memberDto) throws Exception; // 회원가입
 
-	MemberDto loginMember(Map<String, String> map) throws SQLException;
+	int modifyMember(MemberDto memberDto) throws SQLException;
 
-	/* Admin */
-	List<MemberDto> listMember(Map<String, Object> map) throws SQLException;
+	void deleteMember(String UserId) throws SQLException;
 
-	MemberDto getMember(String userId) throws SQLException;
+	String findpw(String userId, String userName, String emailId, String emailDomain) throws SQLException;
 
-	void updateMember(MemberDto memberDto) throws SQLException;
-
-	void deleteMember(String userId) throws SQLException;
+	MemberDto loginMember(Map<String, String> map) throws Exception;
 
 }
