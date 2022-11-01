@@ -7,6 +7,10 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.hw.map.model.CoronaDto;
 import com.ssafy.hw.map.model.HospitalDto;
+import com.ssafy.hw.map.model.InterDto;
+import com.ssafy.hw.map.model.MapDto;
+import com.ssafy.hw.map.model.MetroDto;
+import com.ssafy.hw.map.model.StarBucksDto;
 
 @Mapper
 public interface MapMapper {
@@ -25,7 +29,7 @@ public interface MapMapper {
 	ArrayList<HospitalDto> hospital(String sido, String gugun) throws SQLException;
 
 	StarBucksDto getCoffeeDto(String lat, String lng) throws SQLException;
+
 	MetroDto getMetroDto(String lat, String lng) throws SQLException;
-	
-}
+
 }

@@ -9,10 +9,9 @@ import com.ssafy.hw.map.model.HospitalDto;
 import com.ssafy.hw.map.model.InterDto;
 import com.ssafy.hw.map.model.MapDto;
 import com.ssafy.hw.map.model.MetroDto;
-import com.ssafy.hw.map.model.StarbucksDto;
+import com.ssafy.hw.map.model.StarBucksDto;
 
 public interface MapService {
-
 
 	ArrayList<MapDto> search(String regCode, int year, int month) throws SQLException;
 
@@ -28,7 +27,8 @@ public interface MapService {
 
 	ArrayList<HospitalDto> hospital(Map<String, String> map) throws SQLException;
 
-	StarbucksDto getCoffeeDto(String lat, String lng) throws SQLException;
+	StarBucksDto getCoffeeDto(String lat, String lng) throws SQLException;
+
 	MetroDto getMetroDto(String lat, String lng) throws SQLException;
-	
+
 }

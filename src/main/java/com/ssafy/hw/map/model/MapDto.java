@@ -6,6 +6,5 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "", description = "")
 public class MapDto {
 
-	@ApiModelProperty(value = "")
 	
 }

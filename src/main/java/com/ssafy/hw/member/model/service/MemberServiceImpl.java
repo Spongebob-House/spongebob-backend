@@ -32,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
 		map.put("userid", map.get("userid"));
 		String userPwd = encryptPwd(map.get("userpwd"));
 		map.put("userpwd", userPwd);
-		MemberDto memberDto = memberMapper.loginMember(map);
+	//	MemberDto memberDto = memberMapper.loginMember(map);
 		return memberMapper.loginMember(map);
 	}
 
