@@ -15,13 +15,11 @@ import com.ssafy.hw.map.model.StarBucksDto;
 @Mapper
 public interface MapMapper {
 
-	ArrayList<MapDto> search(String regCode, int year, int month) throws SQLException;
+	ArrayList<MapDto> search(Map<String, String> map) throws SQLException;
 
 	ArrayList<InterDto> getInterDto(String userId) throws SQLException;
 
-	void addinter(String regCode, String userId) throws SQLException;
-
-	int interDupCheck(Map<String, String> map) throws SQLException;
+	void addinter(Map<String, String> map) throws SQLException;
 
 	void delinter(Map<String, String> map) throws SQLException;
 
@@ -29,8 +27,8 @@ public interface MapMapper {
 
 	ArrayList<HospitalDto> hospital(Map<String, String> map) throws SQLException;
 
-	StarBucksDto getCoffee(String lat, String lng) throws SQLException;
-	MetroDto getMetro(String lat, String lng) throws SQLException;
+	StarBucksDto getCoffee(Map<String, Double> map) throws SQLException;
+	MetroDto getMetro(Map<String, Double> map) throws SQLException;
 
 	
 }

@@ -9,7 +9,7 @@
     <header>
       <div class="nav d-flex justify-content-between align-items-center mt-2 mb-2">
       <div class="logo justify-content-start ms-5">
-	      <a class="text-decoration-none ddisplay-5 font-weight-bold " href="${root }">FIND HOME</a>
+	      <a class="text-decoration-none ddisplay-5 font-weight-bold " href="${root }/">FIND HOME</a>
 	      
       </div>
  <c:if test="${userinfo ne null}">

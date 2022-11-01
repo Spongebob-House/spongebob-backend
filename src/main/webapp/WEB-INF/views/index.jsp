@@ -20,7 +20,7 @@
             FIND HOME
           </div>
 		<c:if test="${userinfo ne null}">
-          <form class="search-box p-5" method="GET" action="${root }/map" >
+          <form class="search-box p-5" method="GET" action="${root }/map/search" >
             <div class="row col-md-12 mb-2 justify-content-center text-center">
             <input type="hidden" name="act" value="search"/>
          <div class="form-group col-md-2">
@@ -92,7 +92,7 @@
             type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b97c0d315c9af1251f9514bf8ffe4279&libraries=services"
           ></script>
-    <script type="text/javascript" src="${root }/js/main.js"></script>      
+    <script type="text/javascript" src="${root }/assets/js/main.js"></script>      
           </c:if>
         </div>
       </section>
