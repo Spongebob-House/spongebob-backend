@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<%@ include file="/WEB-INF/views/common/logincheck.jsp" %>
 <c:if test="${empty article}">
 	<script type="text/javascript">
 		alert("정상적인 URL 접근이 아닙니다.");
@@ -8,24 +7,24 @@
 	</script>
 </c:if>
       <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="col-lg-10 col-md-10 col-sm-12">
           <h2 class="my-3 py-3 shadow-sm bg-light text-center">
             <mark class="sky">글수정</mark>
           </h2>
         </div>
-        <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="col-lg-10 col-md-10 col-sm-12">
           <form id="form-modify" method="POST" action="">
-          	<input type="hidden" name="articleno" value="${article.articleNo }">
-          	
+            <input type="hidden" name="pgno" value="${pgno}">
+		        <input type="hidden" name="key" value="${key}">
+		        <input type="hidden" name="word" value="${word}">
+            <input type="hidden" name="articleNo" value="${article.articleNo}">
             <div class="mb-3">
               <label for="subject" class="form-label">제목 : </label>
-              <input type="text" class="form-control" id="subject" name="subject" value="${article.subject }" />
+              <input type="text" class="form-control" id="subject" name="subject" value="${article.subject}" />
             </div>
             <div class="mb-3">
               <label for="content" class="form-label">내용 : </label>
-              <textarea class="form-control" id="content" name="content" rows="7">
-${article.content }
-              </textarea>
+              <textarea class="form-control" id="content" name="content" rows="7">${article.content}</textarea>
             </div>
             <div class="col-auto text-center">
               <button type="button" id="btn-modify" class="btn btn-outline-primary mb-3">
@@ -39,10 +38,10 @@ ${article.content }
         </div>
       </div>
     </div>
-     <form id="form-param" method="get" action="">
-      <input type="hidden" id="pgno" name="pgno" value="${param.pgno }">
-      <input type="hidden" id="key" name="key" value="${param.key }">
-      <input type="hidden" id="word" name="word" value="${param.word }">
+    <form id="form-param" method="get" action="">
+      <input type="hidden" id="pgno" name="pgno" value="${pgno}">
+      <input type="hidden" id="key" name="key" value="${key}">
+      <input type="hidden" id="word" name="word" value="${word}">
     </form>
     <script>
       document.querySelector("#btn-modify").addEventListener("click", function () {

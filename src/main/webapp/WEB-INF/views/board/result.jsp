@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<%@ include file="/WEB-INF/views/common/logincheck.jsp" %>
       <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="col-lg-10 col-md-10 col-sm-12">
           <h2 class="my-3 py-3 shadow-sm bg-light text-center">
             <mark class="sky">글쓰기 결과</mark>
           </h2>
         </div>
-        <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="col-lg-10 col-md-10 col-sm-12">
           <div class="card text-center bg-light">
             <h2 class="fw-bold text-primary pt-3">등록 완료!!!</h2>
             <div class="card-body">
