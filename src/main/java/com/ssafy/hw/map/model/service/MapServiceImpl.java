@@ -2,6 +2,7 @@ package com.ssafy.hw.map.model.service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,9 @@ public class MapServiceImpl implements MapService {// 여기서 무엇을 하느
 	}
 
 	@Override
-	public ArrayList<MapDto> search(String regCode, int year, int month) throws SQLException {
+	public ArrayList<MapDto> search(Map<String, String> map) throws SQLException {
 		// TODO Auto-generated method stub
-		return mapMapper.search(regCode, year, month);
+		return mapMapper.search(map);
 	}
 
 	@Override
@@ -38,14 +39,8 @@ public class MapServiceImpl implements MapService {// 여기서 무엇을 하느
 	}
 
 	@Override
-	public void addinter(String regCode, String userId) throws SQLException {
-		mapMapper.addinter(regCode, userId);
-	}
-
-	@Override
-	public int interDupCheck(Map<String, String> map) throws SQLException {
-		// TODO Auto-generated method stub
-		return mapMapper.interDupCheck(map);
+	public void addinter(Map<String, String> map) throws SQLException {
+		mapMapper.addinter(map);
 	}
 
 	@Override
@@ -67,20 +62,38 @@ public class MapServiceImpl implements MapService {// 여기서 무엇을 하느
 	}
 
 	@Override
+<<<<<<< HEAD
 	public StarBucksDto getCoffeeDto(String lat, String lng) throws SQLException {
 		// TODO Auto-generated method stub
 		StarBucksDto coffee = mapMapper.getCoffee(lat, lng)(lat,lng);
+=======
+	public StarBucksDto getCoffeeDto(MapDto mapDto) throws SQLException {
+		// TODO Auto-generated method stub
+		Map<String, Double> map = new HashMap<String, Double>();
+		map.put("lat", Double.parseDouble(mapDto.getLat()));
+		map.put("lng", Double.parseDouble(mapDto.getLng()));
+		StarBucksDto coffee = mapMapper.getCoffee(map);
+>>>>>>> e5c4cd4f7952d7f9916469b49fa28f90112572fe
 		if(coffee!=null)
-			coffee.setDist(getDist(lat,lng,coffee.getLat(),coffee.getLng()));
+			coffee.setDist(getDist(mapDto.getLat(),mapDto.getLng(),coffee.getLat(),coffee.getLng()));
 		return coffee;
 	}
 
 	@Override
-	public MetroDto getMetroDto(String lat, String lng) throws SQLException {
+	public MetroDto getMetroDto(MapDto mapDto) throws SQLException {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
 		MetroDto metro = mapMapper.getMetro(lat, lng);
 		if (metro != null)
 			metro.setDist(getDist(lat, lng, metro.getLat(), metro.getLng()));
+=======
+		Map<String, Double> map = new HashMap<String, Double>();
+		map.put("lat", Double.parseDouble(mapDto.getLat()));
+		map.put("lng", Double.parseDouble(mapDto.getLng()));
+		MetroDto metro = mapMapper.getMetro(map);
+		if(metro != null)
+			metro.setDist(getDist(mapDto.getLat(),mapDto.getLng(),metro.getLat(),metro.getLng()));
+>>>>>>> e5c4cd4f7952d7f9916469b49fa28f90112572fe
 		return metro;
 	}
 

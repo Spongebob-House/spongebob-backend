@@ -221,6 +221,7 @@
     		inter.addEventListener("click",function(){
    				let form = document.querySelector("#inter-form");
    				form.setAttribute("action", "${root }/map/search");
+   				form.setAttribute("method", "GET");
    				form.querySelector("#ndong").value= inter.getAttribute("data-no");
    				form.submit();
     		});

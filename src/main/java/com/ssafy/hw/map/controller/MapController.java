@@ -1,4 +1,4 @@
-package com.ssafy.hw.map.model.controller;
+package com.ssafy.hw.map.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.hw.map.model.CoronaDto;
 import com.ssafy.hw.map.model.HospitalDto;
+import com.ssafy.hw.map.model.InterDto;
+import com.ssafy.hw.map.model.MapDto;
 import com.ssafy.hw.map.model.service.MapService;
 import com.ssafy.hw.member.model.MemberDto;
 
@@ -35,6 +37,7 @@ public class MapController {
 	@Autowired
 	public MapController(MapService mapService) {
 		super();
+		logger.info("mapController 호출");
 		this.mapService = mapService;
 	}
 	@GetMapping("/corona")
@@ -43,7 +46,7 @@ public class MapController {
 		ArrayList<CoronaDto> coronaDtoList;
 		coronaDtoList = mapService.corona(map);
 		model.addAttribute("mapList", coronaDtoList);
-		return "/corona";
+		return "/map/corona";
 	}
 	
 	@GetMapping("/hospital")
@@ -52,17 +55,20 @@ public class MapController {
 		ArrayList<HospitalDto> hospitalDtoList;
 		hospitalDtoList = mapService.hospital(map);
 		model.addAttribute("mapList", hospitalDtoList);
-		return "/hospital";
+		return "/map/hospital";
 	}
 	
-	@DeleteMapping("/delinter")
-	private String delinter(@RequestParam Map<String, String> map, HttpSession session) throws SQLException {
+	@GetMapping("/delinter")
+	private String delinter(@RequestParam Map<String, String> map, HttpSession session, Model model) throws SQLException {
 		logger.debug("delinter call parameter {}", map);
 		String userId;
+		ArrayList<InterDto> interDtoList;
 		MemberDto memberDto = (MemberDto)session.getAttribute("userinfo");
 		userId = memberDto.getUserId();
 		map.put("userid", userId);
 		mapService.delinter(map);
+		interDtoList = mapService.getInterDto(memberDto.getUserId());
+		model.addAttribute("interList", interDtoList);
 		return "/map/search";
 	}
 	
@@ -70,16 +76,30 @@ public class MapController {
 	@Transactional
 	private String addinter(@RequestParam Map<String, String> map, HttpSession session, Model model) throws SQLException{
 		String userId;
+		ArrayList<InterDto> interDtoList;
 		MemberDto memberDto = (MemberDto)session.getAttribute("userinfo");
 		userId = memberDto.getUserId();
 		map.put("userid", userId);
-		if(mapService.interDupCheck(map) != 0) {
-			model.addAttribute("msg", "이미 관심지역에 등록되어있습니다.");
-			return "/map?act=search";
-		}
+		mapService.addinter(map);
+		interDtoList = mapService.getInterDto(memberDto.getUserId());
+		model.addAttribute("interList", interDtoList);
 		return "/map/search";
 	}
 	
-	
-	
+	@GetMapping("/search")
+	private String search(@RequestParam Map<String, String> map, HttpSession session, Model model) throws SQLException {
+		ArrayList<MapDto> mapDtoList;
+		ArrayList<InterDto> interDtoList;
+		MemberDto memberDto = (MemberDto)session.getAttribute("userinfo");
+		interDtoList = mapService.getInterDto(memberDto.getUserId());
+		mapDtoList = mapService.search(map);
+		for(MapDto mapDto:mapDtoList) {
+			mapDto.setCoffee(mapService.getCoffeeDto(mapDto));
+			mapDto.setMetro(mapService.getMetroDto(mapDto));
+		}
+		model.addAttribute("interList", interDtoList);
+		model.addAttribute("mapList", mapDtoList);
+				
+		return "/map/search";
+	} 
 }

@@ -24,4 +24,40 @@
 		delete from inter_area
 		where userId = #{userid} and dongCode = #{dong}
 	</delete>
+	
+	<insert id="addinter" parameterType="map">
+		insert into inter_area(userId, dongCode, dongName)
+		values(#{userid}, #{dong}, 
+		(select concat(sidoName,' ',IFNULL(gugunName,''),' ',IFNULL(dongName,'')) from dongcode 
+		where dongCode = #{dong}))
+	</insert>
+	
+	<select id="getInterDto" parameterType="string" resultType="interDto">
+		select * from inter_area 
+		where userId = #{userId}
+	</select>
+	
+	<select id="search" parameterType="map" resultType="mapDto">
+		select * from houseview 
+		where dongCode = #{dong}
+		<if test="year != null and month != null and !year.equals('') and !month.equals('')">
+			and dealYear = #{year} and dealMonth = #{month} 
+		</if>
+		order by dealYear desc, dealMonth desc
+		limit 20 
+	</select>
+	
+	<select id="getCoffee" parameterType="map" resultType="starBucksDto">
+		select * from starbucks 
+		order by st_distance_sphere(point(#{lng},#{lat}),point(lng,lat))
+		limit 1
+	</select>
+
+	<select id="getMetro" parameterType="map" resultType="metroDto">
+		select * from metro 
+		order by st_distance_sphere(point(#{lng},#{lat}),point(lng,lat)) 
+		limit 1 
+	</select>
+	
+	
 </mapper>

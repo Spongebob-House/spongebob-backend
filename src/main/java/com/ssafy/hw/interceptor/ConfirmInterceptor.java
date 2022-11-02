@@ -21,7 +21,7 @@ public class ConfirmInterceptor implements HandlerInterceptor {
 		HttpSession session = request.getSession();
 		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
 		if(memberDto == null) {
-			response.sendRedirect(request.getContextPath() + "/user/login");
+			response.sendRedirect(request.getContextPath() + "/index");
 			return false;
 		}
 		return true;
