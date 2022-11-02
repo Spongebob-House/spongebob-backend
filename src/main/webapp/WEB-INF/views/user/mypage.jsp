@@ -41,7 +41,7 @@
                 type="text"
                 class="form-control"
                 id="username"
-                name="username"
+                name="userName"
                 placeholder="${userinfo.userName}"
                 readonly
               />
@@ -52,7 +52,7 @@
                 type="text"
                 class="form-control"
                 id="userid"
-                name="userid"
+                name="userId"
                 placeholder="${userinfo.userId}"
                 readonly
               />
@@ -64,7 +64,7 @@
                 type="password"
                 class="form-control"
                 id="userpwd"
-                name="userpwd"
+                name="userPwd"
                 placeholder="********"
                 readonly
               />
@@ -77,7 +77,7 @@
                   type="text"
                   class="form-control"
                   id="emailid"
-                  name="emailid"
+                  name="emailId"
                   placeholder="${userinfo.emailId}"
                 />
                 <span class="input-group-text">@</span>
@@ -85,7 +85,7 @@
                 readonly
                   class="form-control"
                   id="emaildomain"
-                  name="emaildomain"
+                  name="emailDomain"
                   placeholder="${userinfo.emailDomain}" 
                 />
               </div>
@@ -116,7 +116,7 @@
       <div class="text-center">&copy; created by SSAFY SEOUL 17 TEAM 2</div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="./js/mypage.js"></script>
+    <script type="text/javascript" src="/assets/js/mypage.js"></script>
     <script>
     <c:if test="${!empty msg}">
     	alert("${msg}");

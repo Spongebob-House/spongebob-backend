@@ -34,7 +34,7 @@
                 type="text"
                 class="form-control"
                 id="username"
-                name="username"
+                name="userName"
                 placeholder="이름..."
               />
             </div>
@@ -44,7 +44,7 @@
                 type="text"
                 class="form-control"
                 id="userid"
-                name="userid"
+                name="userId"
                 placeholder="아이디..."
               />
             </div>
@@ -55,14 +55,14 @@
                   type="text"
                   class="form-control"
                   id="emailid"
-                  name="emailid"
+                  name="emailId"
                   placeholder="이메일아이디"
                 />
                 <span class="input-group-text">@</span>
                 <select
                   class="form-select"
                   id="emaildomain"
-                  name="emaildomain"
+                  name="emailDomain"
                   aria-label="이메일 도메인 선택"
                 >
                   <option selected>선택</option>

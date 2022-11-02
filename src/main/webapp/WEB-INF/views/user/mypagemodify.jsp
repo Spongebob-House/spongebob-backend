@@ -15,7 +15,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="${root }/assets/css/main.css" />
     <title>FIND HOME</title>
     <style>
     .form-control:focus {
@@ -42,7 +42,7 @@
                 type="text"
                 class="form-control"
                 id="username"
-                name="username"
+                name="userName"
                 placeholder="${userinfo.userName}"
                 readonly
               />
@@ -53,7 +53,7 @@
                 type="text"
                 class="form-control"
                 id="userid"
-                name="userid"
+                name="userId"
                 placeholder="${userinfo.userId}"
                 readonly
               />
@@ -65,7 +65,7 @@
                 type="password"
                 class="form-control"
                 id="userpwd"
-                name="userpwd"
+                name="userPwd"
                 placeholder="비밀번호..."
               />
             </div>
@@ -80,7 +80,7 @@
                   type="text"
                   class="form-control"
                   id="emailid"
-                  name="emailid"
+                  name="emailId"
                   placeholder="이메일아이디"
                   value = ""
                 />
@@ -88,7 +88,7 @@
                <select
                   class="form-select"
                   id="emaildomain"
-                  name="emaildomain"
+                  name="emailDomain"
                   aria-label="이메일 도메인 선택"
                   value=""
                 >
@@ -102,7 +102,7 @@
               </div>
               </div>
               <div class="mb-3">
-              <label for="userpwd" class="form-label">회원가입일 : </label>
+              <label for="userPwd" class="form-label">회원가입일 : </label>
               <input
                 type="text"
                 class="form-control"
@@ -127,7 +127,7 @@
       <div class="text-center">&copy; created by SSAFY SEOUL 17 TEAM 2</div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="./js/mypage.js"></script>
+    <script type="text/javascript" src="${root }/assets/js/mypage.js"></script>
     <script>
 
     

@@ -12,6 +12,7 @@ import com.ssafy.hw.map.model.InterDto;
 import com.ssafy.hw.map.model.MapDto;
 import com.ssafy.hw.map.model.MetroDto;
 import com.ssafy.hw.map.model.StarBucksDto;
+
 @Mapper
 public interface MapMapper {
 
@@ -26,6 +27,7 @@ public interface MapMapper {
 	ArrayList<CoronaDto> corona(Map<String, String> map) throws SQLException;
 
 	ArrayList<HospitalDto> hospital(Map<String, String> map) throws SQLException;
+
 
 	StarBucksDto getCoffee(Map<String, Double> map) throws SQLException;
 	MetroDto getMetro(Map<String, Double> map) throws SQLException;
