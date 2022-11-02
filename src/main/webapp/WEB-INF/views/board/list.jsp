@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ include file="/WEB-INF/views/common/logincheck.jsp" %>
-<c:set var = 'sel' value="selected"></c:set>
 <c:if test="${articles == null}">
 	<script type="text/javascript">
 		alert("정상적인 URL 접근이 아닙니다.");
@@ -23,25 +22,28 @@
               </button>
               <script>
 	              document.querySelector("#btn-mv-register").addEventListener("click", function () {
-	                location.href = "${root}/board/write";
+	            	  let form = document.querySelector("#form-param");
+	                  form.setAttribute("action", "${root}/board/write");
+	                  form.submit();
 	              });              
              </script>
           </c:if>
             </div>
             <div class="col-md-7 offset-3">
               <form class="d-flex" id="form-search" action="">
-              	<input type="hidden" name="act" value="list">
+              	<input type="hidden" name="pgno" value="1">
                 <select
                   class="form-select form-select-sm ms-5 me-1 w-50"
+                  id="skey"
                   name="key"
                   aria-label="검색조건"
                 >
-                  <option value=""<c:if test="${empty key}">selected</c:if>>검색조건</option>
-                  <option value="subject" <c:if test="${'subject' eq key}">selected</c:if>>제목</option>
-                  <option value="userid" <c:if test="${'userid' eq key}">selected</c:if>>작성자</option>
+                  <option value="" selected>검색조건</option>
+                  <option value="subject" >제목</option>
+                  <option value="userid" >작성자</option>
                 </select>
                 <div class="input-group input-group-sm">
-                  <input type="text" class="form-control" name="word" placeholder="검색어..." value="${word}" />
+                  <input type="text" class="form-control" id="sword" name="word" placeholder="검색어..." value="${word}" />
                   <button id="btn-search" class="btn btn-dark" type="button">검색</button>
                 </div>
               </form>
@@ -87,46 +89,38 @@
             </tbody>
           </table>
         </div>
-        <div class="row">
-          <ul class="pagination justify-content-center">
-            <li class="page-item">
-              <a class="page-link" id="page-bef" href="#">이전</a>
-            </li>
-          	<c:forEach var="page" begin="${pageStart }" end="${pageEnd }">
-          	<c:if test="${pgno eq page }">
-            	<li class="page-item"><a class="page-link page-num active" href="#">${page }</a></li>          	
-          	</c:if>
-          	<c:if test="${pgno ne page }">
-            	<li class="page-item"><a class="page-link page-num" href="#">${page }</a></li>          	
-          	</c:if>
-          	</c:forEach>
-
-            <li class="page-item"><a class="page-link" id="page-aft" href="#">다음</a></li>
-          </ul>
-        </div>
+        <div class="m-3 row">${navigation.navigator}</div>
       </div>
     </div>
-    <form id="form-no-param" method="get" action="">
-      <input type="hidden" id="act" name="act" value="">
+    <form id="form-param" method="get" action="">
+      <input type="hidden" id="pgno" name="pgno" value="${pgno}">
+      <input type="hidden" name="key" value="${key}">
+      <input type="hidden" name="word" value="${word}">
+    </form>
+    <form id="form-no-param" method="get" action="${root}/board/view">
       <input type="hidden" id="pgno" name="pgno" value="${pgno }">
       <input type="hidden" id="key" name="key" value="${key }">
       <input type="hidden" id="word" name="word" value="${word }">
       <input type="hidden" id="articleno" name="articleno" value="">
     </form>
     <script>
+	    var sel = document.getElementById("skey");
+		for(var i=0; i<sel.length; i++){
+			if(sel[i].value == "${key}"){
+				sel[i].selected = true;
+			}
+		}
+		
+		if("${word}" != "")
+			document.getElementById("sword").value = "${word}";
+
       let titles = document.querySelectorAll(".article-title");
       titles.forEach(function (title) {
         title.addEventListener("click", function () {
-        	let form = document.querySelector("#form-no-param");
-        	form.setAttribute("action","${root}/board/view");
-//         	form.querySelector("#pgno").value="view";
-//         	form.querySelector("#key").value="view";
-//         	form.querySelector("#word").value="view";
-        	form.querySelector("#articleno").value=this.getAttribute("data-no");
-        	form.submit();
+        	document.querySelector("#articleno").value = this.getAttribute("data-no");
+            document.querySelector("#form-no-param").submit();
         });
       });
-
       
       document.querySelector("#btn-search").addEventListener("click", function () {
     	  let form = document.querySelector("#form-search");
@@ -135,35 +129,15 @@
       });
 
       
-      let pglinks = document.querySelectorAll(".page-num");
-      pglinks.forEach(function (pglink) {
-    	  pglink.addEventListener("click", function () {
-          	let form = document.querySelector("#form-no-param");
-          	form.setAttribute("action","${root}/board/list");
-           	form.querySelector("#pgno").value= this.innerText;
-          	form.submit();
-          });
+      let pages = document.querySelectorAll(".page-link");
+      pages.forEach(function (page) {
+        page.addEventListener("click", function () {
+        	let form = document.querySelector("#form-param");
+        	document.querySelector("#pgno").value = page.parentNode.getAttribute("data-pg");
+          form.setAttribute("action", "${root}/board/list");
+          form.submit();
         });
-      
-      document.querySelector("#page-bef").addEventListener("click",function(){
-        	let form = document.querySelector("#form-no-param");
-          	form.setAttribute("action","${root}/board/list");
-           	form.querySelector("#pgno").value= ${pageStart-pageSize};
-          	form.submit();
-    	  
-      })     
-      document.querySelector("#page-aft").addEventListener("click",function(){
-        	let form = document.querySelector("#form-no-param");
-          	form.setAttribute("action","${root}/board/list");
-          	<c:if test="${maxPage ge (pageStart+pageSize)}">
-           	form.querySelector("#pgno").value= ${pageStart+pageSize};          	
-          	</c:if>
-          	<c:if test="${maxPage lt (pageStart+pageSize)}">
-          	form.querySelector("#pgno").value= ${pgno};          	
-          	</c:if>
-          	form.submit();
-    	  
-      })     
+      });
       
     </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
