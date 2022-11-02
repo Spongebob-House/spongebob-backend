@@ -1,6 +1,9 @@
 package com.ssafy.hw.board.controller;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,12 +18,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -169,18 +179,29 @@ public class BoardController {
 	}
 
 	@GetMapping(value = "/download")
-	public ModelAndView downloadFile(@RequestParam("sfolder") String sfolder, @RequestParam("ofile") String ofile,
+	@ResponseBody
+	public ResponseEntity<Object> downloadFile(@Value("${file.path.upload-files}") String filePath1, @RequestParam("sfolder") String sfolder, @RequestParam("ofile") String ofile,
 			@RequestParam("sfile") String sfile, HttpSession session) {
 		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
 		if (memberDto != null) {
 			Map<String, Object> fileInfo = new HashMap<String, Object>();
-			fileInfo.put("sfolder", sfolder);
-			fileInfo.put("ofile", ofile);
-			fileInfo.put("sfile", sfile);
-
-			return new ModelAndView("fileDownLoadView", "downloadFile", fileInfo);
+			String path = filePath1 + File.separator + sfolder + File.separator + sfile;
+			
+			try {
+				Path filePath = Paths.get(path);
+				Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
+				
+				File file = new File(path);
+				
+				HttpHeaders headers = new HttpHeaders();
+				headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());  // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+				
+				return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
+			} catch(Exception e) {
+				return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
+			}
 		} else {
-			return new ModelAndView("redirect:/");
+			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
 		}
 	}
 
