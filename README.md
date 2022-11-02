@@ -1,4 +1,6 @@
-## [관통프로젝트] MyBatis + SpringBoot
+## [관통 PJT] MyBatis + SpringBoot
+
+<img src="https://user-images.githubusercontent.com/55784772/199529486-612bd4af-d9c5-4961-9271-9e05bf0ee43a.gif" alt="pigeons" />
 
 #### 팀원 - 박상우, 손예지
 #### 프로젝트 기간 - 2022.11.02
