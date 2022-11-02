@@ -62,38 +62,28 @@ public class MapServiceImpl implements MapService {// 여기서 무엇을 하느
 	}
 
 	@Override
-<<<<<<< HEAD
-	public StarBucksDto getCoffeeDto(String lat, String lng) throws SQLException {
-		// TODO Auto-generated method stub
-		StarBucksDto coffee = mapMapper.getCoffee(lat, lng)(lat,lng);
-=======
+
 	public StarBucksDto getCoffeeDto(MapDto mapDto) throws SQLException {
 		// TODO Auto-generated method stub
 		Map<String, Double> map = new HashMap<String, Double>();
 		map.put("lat", Double.parseDouble(mapDto.getLat()));
 		map.put("lng", Double.parseDouble(mapDto.getLng()));
 		StarBucksDto coffee = mapMapper.getCoffee(map);
->>>>>>> e5c4cd4f7952d7f9916469b49fa28f90112572fe
-		if(coffee!=null)
-			coffee.setDist(getDist(mapDto.getLat(),mapDto.getLng(),coffee.getLat(),coffee.getLng()));
+		if (coffee != null)
+			coffee.setDist(getDist(mapDto.getLat(), mapDto.getLng(), coffee.getLat(), coffee.getLng()));
 		return coffee;
 	}
 
 	@Override
 	public MetroDto getMetroDto(MapDto mapDto) throws SQLException {
 		// TODO Auto-generated method stub
-<<<<<<< HEAD
-		MetroDto metro = mapMapper.getMetro(lat, lng);
-		if (metro != null)
-			metro.setDist(getDist(lat, lng, metro.getLat(), metro.getLng()));
-=======
+
 		Map<String, Double> map = new HashMap<String, Double>();
 		map.put("lat", Double.parseDouble(mapDto.getLat()));
 		map.put("lng", Double.parseDouble(mapDto.getLng()));
 		MetroDto metro = mapMapper.getMetro(map);
-		if(metro != null)
-			metro.setDist(getDist(mapDto.getLat(),mapDto.getLng(),metro.getLat(),metro.getLng()));
->>>>>>> e5c4cd4f7952d7f9916469b49fa28f90112572fe
+		if (metro != null)
+			metro.setDist(getDist(mapDto.getLat(), mapDto.getLng(), metro.getLat(), metro.getLng()));
 		return metro;
 	}
 

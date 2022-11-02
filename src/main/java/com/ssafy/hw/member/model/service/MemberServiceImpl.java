@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,8 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int joinMember(MemberDto memberDto) throws Exception {
-		return 0;
+		memberDto.setUserPwd(encryptPwd(memberDto.getUserPwd()));
+		return memberMapper.joinMember(memberDto);
 	}
 
 	@Override
@@ -32,25 +34,29 @@ public class MemberServiceImpl implements MemberService {
 		map.put("userid", map.get("userid"));
 		String userPwd = encryptPwd(map.get("userpwd"));
 		map.put("userpwd", userPwd);
-	//	MemberDto memberDto = memberMapper.loginMember(map);
+		// MemberDto memberDto = memberMapper.loginMember(map);
 		return memberMapper.loginMember(map);
 	}
 
 	@Override
 	public int modifyMember(MemberDto memberDto) throws SQLException {
-		return 0;
+		return memberMapper.modifyMember(memberDto);
 	}
 
 	@Override
 	public void deleteMember(String UserId) throws SQLException {
-		// TODO Auto-generated method stub
-
+		memberMapper.deleteMember(UserId);
 	}
 
 	@Override
-	public String findpw(String userId, String userName, String emailId, String emailDomain) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public String findpw(Map<String, String> map) throws SQLException {
+		String random = makeRand();
+		map.put("userPwd", encryptPwd(random));
+		if (memberMapper.findpw(map) == 1) {
+			return random;
+		} else {
+			return "";
+		}
 	}
 
 	private String encryptPwd(String base) {
@@ -72,6 +78,26 @@ public class MemberServiceImpl implements MemberService {
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
+	}
+
+	private String makeRand() {
+		Random rnd = new Random();
+		StringBuilder key = new StringBuilder();
+		for (int i = 0; i < 6; i++) {
+			int index = rnd.nextInt(3);
+			switch (index) {
+			case 0:
+				key.append(((int) (rnd.nextInt(26)) + 97));
+				break;
+			case 1:
+				key.append(((int) (rnd.nextInt(26)) + 65));
+				break;
+			case 2:
+				key.append((rnd.nextInt(10)));
+				break;
+			}
+		}
+		return key.toString();
 	}
 
 }

@@ -22,7 +22,7 @@
     </div>
     <script>
       document.querySelector("#btn-index").addEventListener("click", function () {
-        location.href = "${root}";
+        location.href = "${root}/index";
       });
     </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
