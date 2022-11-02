@@ -55,6 +55,7 @@
                 id="userid"
                 name="userId"
                 placeholder="${userinfo.userId}"
+                value="${userinfo.userId}"
                 readonly
               />
             </div>

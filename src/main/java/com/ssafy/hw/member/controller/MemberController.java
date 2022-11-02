@@ -78,7 +78,7 @@ public class MemberController {
 			} else {
 				model.addAttribute("msg", "아이디 또는 비밀번호 확인 후 다시 로그인하세요!");
 				logger.debug("dddfsfd");
-				return "user/login";
+				return "error/error";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -158,6 +158,7 @@ public class MemberController {
 		try {
 			MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
 			memberService.deleteMember(memberDto.getUserId());
+			session.invalidate();
 			return "result/delete";
 		} catch (SQLException e) {
 			e.printStackTrace();
