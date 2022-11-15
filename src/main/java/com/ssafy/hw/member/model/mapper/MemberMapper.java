@@ -19,7 +19,7 @@ public interface MemberMapper {
 
 	void deleteMember(String UserId) throws SQLException;
 
-	int findpw(Map<String, String> map) throws SQLException;
+	int findpw(MemberDto memberDto) throws SQLException;
 
 	MemberDto loginMember(Map<String, String> map) throws Exception;
 
