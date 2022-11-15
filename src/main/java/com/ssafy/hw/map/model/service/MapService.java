@@ -15,9 +15,9 @@ public interface MapService {
 
 	ArrayList<MapDto> search(Map<String, String> map) throws SQLException;
 
-	void addinter(Map<String, String> map) throws SQLException;
+	boolean addinter(Map<String, String> map) throws SQLException;
 
-	void delinter(Map<String, String> map) throws SQLException;
+	boolean delinter(Map<String, String> map) throws SQLException;
 
 	ArrayList<CoronaDto> corona(Map<String, String> map) throws SQLException;
 
