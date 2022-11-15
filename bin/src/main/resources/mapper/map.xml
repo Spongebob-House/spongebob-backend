@@ -25,11 +25,11 @@
 		where userId = #{userid} and dongCode = #{dong}
 	</delete>
 	
-	<insert id="addinter" parameterType="interDto">
+	<insert id="addinter" parameterType="map">
 		insert into inter_area(userId, dongCode, dongName)
-		values(#{userId}, #{dongCode}, 
+		values(#{userid}, #{dong}, 
 		(select concat(sidoName,' ',IFNULL(gugunName,''),' ',IFNULL(dongName,'')) from dongcode 
-		where dongCode = #{dongCode}))
+		where dongCode = #{dong}))
 	</insert>
 	
 	<select id="getInterDto" parameterType="string" resultType="interDto">

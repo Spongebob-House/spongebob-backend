@@ -164,7 +164,7 @@ public class BoardController {
 	
 	@ApiOperation(value = "게시판 글삭제", notes = "글번호에 해당하는 게시글의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@RequestMapping(value = "/{articleno}", method = RequestMethod.DELETE)
-	public ResponseEntity<String> deleteArticle(@ApiParam(value = "살제할 글의 글번호.") @PathVariable("articleno") int articleno) throws Exception {
+	public ResponseEntity<String> deleteArticle(@ApiParam(value = "삭제할 글의 글번호.") @PathVariable("articleno") int articleno) throws Exception {
 		logger.info("deleteArticle - 호출");
 		if (boardService.deleteArticle(articleno, servletContext.getRealPath("/upload"))) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);

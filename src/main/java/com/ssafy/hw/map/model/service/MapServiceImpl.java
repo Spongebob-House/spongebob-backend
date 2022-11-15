@@ -39,8 +39,8 @@ public class MapServiceImpl implements MapService {// 여기서 무엇을 하느
 	}
 
 	@Override
-	public boolean addinter(Map<String, String> map) throws SQLException {
-		return mapMapper.addinter(map) == 1;
+	public boolean addinter(InterDto interDto) throws SQLException {
+		return mapMapper.addinter(interDto) == 1;
 	}
 
 	@Override
