@@ -39,13 +39,13 @@ public class MapServiceImpl implements MapService {// 여기서 무엇을 하느
 	}
 
 	@Override
-	public void addinter(Map<String, String> map) throws SQLException {
-		mapMapper.addinter(map);
+	public boolean addinter(Map<String, String> map) throws SQLException {
+		return mapMapper.addinter(map) == 1;
 	}
 
 	@Override
-	public void delinter(Map<String, String> map) throws SQLException {
-		mapMapper.delinter(map);
+	public boolean delinter(Map<String, String> map) throws SQLException {
+		return mapMapper.delinter(map) == 1;
 
 	}
 

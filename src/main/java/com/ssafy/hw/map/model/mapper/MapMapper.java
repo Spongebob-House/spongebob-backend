@@ -20,9 +20,9 @@ public interface MapMapper {
 
 	ArrayList<InterDto> getInterDto(String userId) throws SQLException;
 
-	void addinter(Map<String, String> map) throws SQLException;
+	int addinter(Map<String, String> map) throws SQLException;
 
-	void delinter(Map<String, String> map) throws SQLException;
+	int delinter(Map<String, String> map) throws SQLException;
 
 	ArrayList<CoronaDto> corona(Map<String, String> map) throws SQLException;
 
