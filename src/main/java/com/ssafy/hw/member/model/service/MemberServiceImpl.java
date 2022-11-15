@@ -50,10 +50,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public String findpw(Map<String, String> map) throws SQLException {
+	public String findpw(MemberDto memberDto) throws SQLException {
 		String random = makeRand();
-		map.put("userPwd", encryptPwd(random));
-		if (memberMapper.findpw(map) == 1) {
+		memberDto.setUserPwd(random);
+		if (memberMapper.findpw(memberDto) == 1) {
 			return random;
 		} else {
 			return "";

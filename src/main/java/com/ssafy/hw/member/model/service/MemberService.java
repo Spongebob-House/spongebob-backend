@@ -19,5 +19,5 @@ public interface MemberService {
 
 	void deleteMember(String UserId) throws SQLException;
 
-	String findpw(Map<String, String> map) throws SQLException;
+	String findpw(MemberDto memberDto) throws SQLException;
 }
