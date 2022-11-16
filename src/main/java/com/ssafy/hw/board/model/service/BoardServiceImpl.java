@@ -26,15 +26,20 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	@Transactional
-	public void writeArticle(BoardDto boardDto) throws Exception {
+//	@Transactional
+	public boolean writeArticle(BoardDto boardDto) throws Exception {
 		System.out.println("글입력 전 dto : " + boardDto);
-		boardMapper.writeArticle(boardDto);
-		System.out.println("글입력 후 dto : " + boardDto);
-		List<FileInfoDto> fileInfos = boardDto.getFileInfos();
-		if (fileInfos != null && !fileInfos.isEmpty()) {
-			boardMapper.registerFile(boardDto);
-		}
+		if(boardMapper.writeArticle(boardDto) == 1) {
+			System.out.println("글입력 후 dto : " + boardDto);
+			List<FileInfoDto> fileInfos = boardDto.getFileInfos();
+			if (fileInfos != null && !fileInfos.isEmpty()) {
+				if(boardMapper.registerFile(boardDto) == 1) {
+					return true;
+				}
+			}
+			else return true;
+		};
+		return false;
 	}
 
 	@Override
@@ -44,11 +49,10 @@ public class BoardServiceImpl implements BoardService {
 		String key = map.get("key");
 		if ("userid".equals(key))
 			key = "b.user_id";
-		param.put("key", key == null ? "" : key);
-		param.put("word", map.get("word") == null ? "" : map.get("word"));
 		int pgNo = Integer.parseInt((map.get("pgno") != null && !"".equals(map.get("pgno")))? map.get("pgno"): "1");
 		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
-		
+		param.put("key", map.get("key"));
+		param.put("word", map.get("word"));
 		param.put("start", start);
 		param.put("listsize", SizeConstant.LIST_SIZE);
 		return boardMapper.listArticle(param);
@@ -98,21 +102,25 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void modifyArticle(BoardDto boardDto) throws Exception {
-		boardMapper.modifyArticle(boardDto);
+	public boolean modifyArticle(BoardDto boardDto) throws Exception {
+		return boardMapper.modifyArticle(boardDto) == 1;
 	}
 
 	@Override
 	@Transactional
 	public boolean deleteArticle(int articleNo, String path) throws Exception {
 		List<FileInfoDto> fileList = boardMapper.fileInfoList(articleNo);
-		boardMapper.deleteFile(articleNo);
-		boardMapper.deleteArticle(articleNo);
-		for(FileInfoDto fileInfoDto : fileList) {
-			File file = new File(path + File.separator + fileInfoDto.getSaveFolder() + File.separator + fileInfoDto.getSaveFile());
-			file.delete();
+		if(boardMapper.deleteFile(articleNo) == 1) {
+			if(boardMapper.deleteArticle(articleNo) == 1) {
+				for(FileInfoDto fileInfoDto : fileList) {
+					File file = new File(path + File.separator + fileInfoDto.getSaveFolder() + File.separator + fileInfoDto.getSaveFile());
+					file.delete();
+				}
+				return true;
+			}
 		}
-		return true;
+
+		return false;
 	}
 
 }
