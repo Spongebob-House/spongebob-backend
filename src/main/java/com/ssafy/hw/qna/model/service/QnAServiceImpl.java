@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.hw.memo.model.MemoDto;
 import com.ssafy.hw.qna.model.QnADto;
 import com.ssafy.hw.qna.model.QnAParameterDto;
 import com.ssafy.hw.qna.model.mapper.QnAMapper;
@@ -73,5 +74,15 @@ public class QnAServiceImpl implements QnAService {
 		sqlSession.getMapper(QnAMapper.class).deleteMemo(articleno);
 		return sqlSession.getMapper(QnAMapper.class).deleteArticle(articleno) == 1;
 	}
+
+	@Override
+	public boolean writeMemo(MemoDto memoDto) throws Exception {
+		if (memoDto.getComment() == null) {
+			throw new Exception();
+		}
+		return sqlSession.getMapper(QnAMapper.class).writeMemo(memoDto) == 1;
+	}
+
+
 
 }

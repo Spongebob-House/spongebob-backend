@@ -17,6 +17,8 @@ public class QnADto {
 	private int hit;
 	@ApiModelProperty(value = "작성일")
 	private String regtime;
+	@ApiModelProperty(value = "메모")
+	private String memo;
 
 	public int getArticleno() {
 		return articleno;
@@ -64,6 +66,14 @@ public class QnADto {
 
 	public void setRegtime(String regtime) {
 		this.regtime = regtime;
+	}
+
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
 
 	@Override
