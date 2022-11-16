@@ -20,6 +20,7 @@ import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import com.ssafy.hw.board.model.BoardDto;
 import com.ssafy.hw.board.model.service.BoardService;
@@ -43,7 +45,8 @@ import io.swagger.annotations.ApiParam;
 @Api("게시판 컨트롤러  API V1")
 public class BoardController {
 
-	private final Logger logger = LoggerFactory.getLogger(BoardController.class);
+
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 
@@ -58,9 +61,13 @@ public class BoardController {
 		this.boardService = boardService;
 	}
 
+
+
+
 //	@ApiOperation(value = "공지사항 쓰기", notes = "공지사항을 작성한다.", response = List.class)
 //	@PostMapping
 //	public ResponseEntity<String> write(@Value("${file.path.upload-files}") String filePath, BoardDto boardDto, @RequestParam("upfile") MultipartFile[] files) throws Exception {
+
 //
 ////		FileUpload 관련 설정.
 //		logger.debug("MultipartFile.isEmpty : {}", files[0].isEmpty());
@@ -89,6 +96,7 @@ public class BoardController {
 //				fileInfos.add(fileInfoDto);
 //			}
 //			boardDto.setFileInfos(fileInfos);
+
 //		}
 //		if(boardService.writeArticle(boardDto)) {
 //			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
@@ -165,11 +173,13 @@ public class BoardController {
 	@ApiOperation(value = "게시판 글삭제", notes = "글번호에 해당하는 게시글의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@RequestMapping(value = "/{articleno}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteArticle(@ApiParam(value = "삭제할 글의 글번호.") @PathVariable("articleno") int articleno) throws Exception {
+
 		logger.info("deleteArticle - 호출");
 		if (boardService.deleteArticle(articleno, servletContext.getRealPath("/upload"))) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+
 	}
 
 	@GetMapping(value = "/download")
@@ -192,6 +202,44 @@ public class BoardController {
 			} catch(Exception e) {
 				return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
 			}
+
 	}
+//	@GetMapping("/delete")
+//	public String delete(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map,
+//			RedirectAttributes redirectAttributes) throws Exception {
+//		logger.debug("delete articleNo : {}", articleNo);
+//		boardService.deleteArticle(articleNo, servletContext.getRealPath("/upload"));
+//		redirectAttributes.addAttribute("pgno", map.get("pgno"));
+//		redirectAttributes.addAttribute("key", map.get("key"));
+//		redirectAttributes.addAttribute("word", map.get("word"));
+//		return "redirect:/board/list";
+//	}
+
+//	@GetMapping(value = "/download")
+//	@ResponseBody
+//	public ResponseEntity<Object> downloadFile(@Value("${file.path.upload-files}") String filePath1, @RequestParam("sfolder") String sfolder, @RequestParam("ofile") String ofile,
+//			@RequestParam("sfile") String sfile, HttpSession session) {
+//		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+//		if (memberDto != null) {
+//			Map<String, Object> fileInfo = new HashMap<String, Object>();
+//			String path = filePath1 + File.separator + sfolder + File.separator + sfile;
+//			
+//			try {
+//				Path filePath = Paths.get(path);
+//				Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
+//				
+//				File file = new File(path);
+//				
+//				HttpHeaders headers = new HttpHeaders();
+//				headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());  // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+//				
+//				return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
+//			} catch(Exception e) {
+//				return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
+//			}
+//		} else {
+//			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
+//		}
+//	}
 
 }
