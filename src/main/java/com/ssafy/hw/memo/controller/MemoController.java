@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.hw.memo.model.MemoDto;
@@ -63,9 +64,9 @@ public class MemoController {
 	}
 
 	@ApiOperation(value = "게시판 댓글삭제", notes = "글번호에 해당하는 댓글의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@DeleteMapping("/{memono}")
+	@DeleteMapping
 	public ResponseEntity<String> deleteMemo(
-			@PathVariable("memono") @ApiParam(value = "삭제할 댓글의 글번호.", required = true) int memono) throws Exception {
+			@RequestParam("memono") @ApiParam(value = "삭제할 댓글의 글번호.", required = true) int memono) throws Exception {
 		logger.info("deleteMemo - 호출");
 		if (memoService.deleteMemo(memono)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);

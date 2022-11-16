@@ -57,11 +57,10 @@
 
 	<select id="getArticle" parameterType="int" resultType="qnaDto">
 		select
-		q.articleno, q.userid, q.subject, q.content, q.hit, q.regtime,
-		m.comment
-		from qna q left join memo m
-		on q.articleno = m.articleno and
-		q.articleno = #{articleno};
+		q.articleno, q.userid, q.subject, q.content, q.hit, q.regtime
+        from qna q
+		where
+		q.articleno = #{articleno}
 	</select>
 
 	<update id="updateHit" parameterType="int">
