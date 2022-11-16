@@ -104,7 +104,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	@Transactional
-	public void deleteArticle(int articleNo, String path) throws Exception {
+	public boolean deleteArticle(int articleNo, String path) throws Exception {
 		List<FileInfoDto> fileList = boardMapper.fileInfoList(articleNo);
 		boardMapper.deleteFile(articleNo);
 		boardMapper.deleteArticle(articleNo);
@@ -112,6 +112,7 @@ public class BoardServiceImpl implements BoardService {
 			File file = new File(path + File.separator + fileInfoDto.getSaveFolder() + File.separator + fileInfoDto.getSaveFile());
 			file.delete();
 		}
+		return true;
 	}
 
 }
