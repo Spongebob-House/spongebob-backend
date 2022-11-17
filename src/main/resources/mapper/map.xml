@@ -40,7 +40,7 @@
 	<select id="search" parameterType="map" resultType="mapDto">
 		select * from houseview 
 		where dongCode = #{dong}
-		<if test="year != null and month != null and !year.equals('') and !month.equals('')">
+		<if test="!year.equals('null') and !month.equals('null') and !year.equals('') and !month.equals('')">
 			and dealYear = #{year} and dealMonth = #{month} 
 		</if>
 		order by dealYear desc, dealMonth desc
