@@ -49,10 +49,10 @@
 
 	<select id="getMember" parameterType="string"
 		resultMap="memberAll">
-		select user_id, user_name, user_password, email_id,
+		select user_id, user_name, email_id,
 		email_domain, join_date
 		from members
-		where user_id = #{userid}
+		where user_id = #{userId}
 	</select>
 
 	<update id="modifyMember" parameterType="memberDto">
@@ -76,5 +76,23 @@
 		set
 		user_password = #{userPwd}
 		where user_id = #{userId} 
+	</update>
+	
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from members
+		where user_id = #{userId}
+	</select>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update members
+		set token = #{token}
+		where user_id = #{userId}
+	</update>
+	
+	<update id="deleteRefreshToken" parameterType="map">
+		update members
+		set token = #{token, jdbcType=VARCHAR}
+		where user_id = #{userId}
 	</update>
 </mapper>

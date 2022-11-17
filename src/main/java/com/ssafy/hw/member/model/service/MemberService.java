@@ -15,9 +15,15 @@ public interface MemberService {
 
 	MemberDto loginMember(Map<String, String> map) throws Exception; // 로그인
 
+	MemberDto getMember(String userId) throws Exception;
+	
 	int modifyMember(MemberDto memberDto) throws SQLException;
 
 	void deleteMember(String UserId) throws SQLException;
 
 	String findpw(MemberDto memberDto) throws SQLException;
+
+	public void saveRefreshToken(String userid, String refreshToken) throws Exception;
+	public Object getRefreshToken(String userid) throws Exception;
+	public void deleRefreshToken(String userid) throws Exception;
 }

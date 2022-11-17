@@ -4,18 +4,13 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,11 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.hw.member.model.MemberDto;
+import com.ssafy.hw.member.model.service.JwtServiceImpl;
 import com.ssafy.hw.member.model.service.MemberService;
 
 import io.swagger.annotations.Api;
@@ -58,7 +52,7 @@ public class MemberController {
 	public ResponseEntity<Map<String, Object>> login(
 			@RequestBody @ApiParam(value = "로그인 시 필요한 회원정보(아이디, 비밀번호).", required = true) MemberDto memberDto) {
 		Map<String, String> map = new HashMap<>();
-		Map<String, String> resultMap = new HashMap<>();
+		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		map.put("userid", memberDto.getUserId());
 		map.put("userpwd", memberDto.getUserPwd());
@@ -67,9 +61,9 @@ public class MemberController {
 			MemberDto curMember = memberService.loginMember(map);
 			logger.debug("memberDto : {}", curMember);
 			if (curMember != null) {
-				String accessToken = jwtService.createAccessToken("userid", loginUser.getUserid());// key, data
-				String refreshToken = jwtService.createRefreshToken("userid", loginUser.getUserid());// key, data
-				memberService.saveRefreshToken(memberDto.getUserid(), refreshToken);
+				String accessToken = jwtService.createAccessToken("userid", curMember.getUserId());// key, data
+				String refreshToken = jwtService.createRefreshToken("userid", curMember.getUserId());// key, data
+				memberService.saveRefreshToken(memberDto.getUserId(), refreshToken);
 				resultMap.put("access-token", accessToken);
 				resultMap.put("refresh-token", refreshToken);
 				resultMap.put("message", SUCCESS);
@@ -99,7 +93,7 @@ public class MemberController {
 			logger.info("사용 가능한 토큰!!!");
 			try {
 //				로그인 사용자 정보.
-				MemberDto memberDto = memberService.userInfo(userid);
+				MemberDto memberDto = memberService.getMember(userid);
 				resultMap.put("userInfo", memberDto);
 				resultMap.put("message", SUCCESS);
 				status = HttpStatus.ACCEPTED;
@@ -143,8 +137,8 @@ public class MemberController {
 		String token = request.getHeader("refresh-token");
 		logger.debug("token : {}, memberDto : {}", token, memberDto);
 		if (jwtService.checkToken(token)) {
-			if (token.equals(memberService.getRefreshToken(memberDto.getUserid()))) {
-				String accessToken = jwtService.createAccessToken("userid", memberDto.getUserid());
+			if (token.equals(memberService.getRefreshToken(memberDto.getUserId()))) {
+				String accessToken = jwtService.createAccessToken("userid", memberDto.getUserId());
 				logger.debug("token : {}", accessToken);
 				logger.debug("정상적으로 액세스토큰 재발급!!!");
 				resultMap.put("access-token", accessToken);
