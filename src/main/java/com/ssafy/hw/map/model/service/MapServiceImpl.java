@@ -3,6 +3,7 @@ package com.ssafy.hw.map.model.service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.ssafy.hw.map.model.HospitalDto;
 import com.ssafy.hw.map.model.InterDto;
 import com.ssafy.hw.map.model.MapDto;
 import com.ssafy.hw.map.model.MetroDto;
+import com.ssafy.hw.map.model.NaviDto;
 import com.ssafy.hw.map.model.StarBucksDto;
 import com.ssafy.hw.map.model.mapper.MapMapper;
 
@@ -99,6 +101,19 @@ public class MapServiceImpl implements MapService {// 여기서 무엇을 하느
 
 		int D = (int) (Math.sqrt(X * X + Y * Y) * 1000);
 		return D;
+	}
+
+	@Override
+	public List<NaviDto> navi(String text) throws SQLException {
+		StringBuilder sb = new StringBuilder();
+		char[] arr = text.toCharArray();
+		sb.append("%");
+		for (int i = 0; i < arr.length; i++) {
+			if(' ' != arr[i])
+			sb.append(arr[i]).append("%");
+			
+		}
+		return mapMapper.navi(sb.toString());
 	}
 
 }

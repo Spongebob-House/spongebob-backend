@@ -24,6 +24,7 @@ import com.ssafy.hw.map.model.CoronaDto;
 import com.ssafy.hw.map.model.HospitalDto;
 import com.ssafy.hw.map.model.InterDto;
 import com.ssafy.hw.map.model.MapDto;
+import com.ssafy.hw.map.model.NaviDto;
 import com.ssafy.hw.map.model.service.MapService;
 
 import io.swagger.annotations.Api;
@@ -46,6 +47,18 @@ public MapController(MapService mapService) {
     logger.info("mapController 호출");
     this.mapService = mapService;
 }
+@ApiOperation(value = "검색 리스트", notes = "사용자가 검색창에 검색한 단어를 기반으로 해당하는 리스트를 반환한다,", response = List.class)
+@GetMapping("/{text}")
+private ResponseEntity<List<NaviDto>> navi(@PathVariable("text") @ApiParam(value = "검색어", required = true) String text) throws SQLException {
+	logger.debug("search call parameter {}", text);
+	List<NaviDto> searchList;
+	searchList = mapService.navi(text);
+	if (searchList.isEmpty()) {
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
+	}
+	return new ResponseEntity<List<NaviDto>>(searchList, HttpStatus.OK);
+}
+
 @ApiOperation(value = "코로나 진료소 정보", notes = "코로나 선별진료소 정보를 반환한다,", response = List.class)
 @GetMapping("/corona/{gugun}")
 private ResponseEntity<List<CoronaDto>> corona(@PathVariable("gugun") @ApiParam(value = "구군코드.", required = true) String gugun) throws SQLException {
