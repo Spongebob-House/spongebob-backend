@@ -2,6 +2,7 @@ package com.ssafy.hw.map.model.mapper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -12,6 +13,7 @@ import com.ssafy.hw.map.model.InterDto;
 import com.ssafy.hw.map.model.MapDto;
 import com.ssafy.hw.map.model.MetroDto;
 import com.ssafy.hw.map.model.StarBucksDto;
+import com.ssafy.hw.map.model.NaviDto;
 
 @Mapper
 public interface MapMapper {
@@ -31,6 +33,8 @@ public interface MapMapper {
 
 	StarBucksDto getCoffee(Map<String, Double> map) throws SQLException;
 	MetroDto getMetro(Map<String, Double> map) throws SQLException;
+
+	List<NaviDto> navi(String string) throws SQLException;
 
 	
 }

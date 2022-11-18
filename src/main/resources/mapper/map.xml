@@ -4,6 +4,12 @@
 	
 <mapper namespace="com.ssafy.hw.map.model.mapper.MapMapper">
 
+	<select id="navi" parameterType = "string" resultType="naviDto">
+		select dongCode, concat(sidoName, ' ', gugunName, ' ', dongName) as name 
+		from dongcode
+		where concat(sidoName, gugunName, dongName) like #{text}
+		limit 0, 10;
+	</select>
 	<select id="corona" parameterType="map" resultType="coronaDto">
 		select c.name, c.address, c.weekday, c.saterday, c.sunday, c.phonenumber, c.conv 
 		from corona c
