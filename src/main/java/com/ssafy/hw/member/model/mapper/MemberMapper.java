@@ -22,5 +22,11 @@ public interface MemberMapper {
 	int findpw(MemberDto memberDto) throws SQLException;
 
 	MemberDto loginMember(Map<String, String> map) throws Exception;
+	
+	MemberDto getMember(String userId) throws Exception;
+
+	public void saveRefreshToken(Map<String, String> map) throws SQLException;
+	public Object getRefreshToken(String userid) throws SQLException;
+	public void deleteRefreshToken(Map<String, String> map) throws SQLException;
 
 }

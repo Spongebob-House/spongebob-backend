@@ -2,6 +2,7 @@ package com.ssafy.hw.member.model.service;
 
 import java.security.MessageDigest;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -99,6 +100,32 @@ public class MemberServiceImpl implements MemberService {
 			}
 		}
 		return key.toString();
+	}
+	
+	@Override
+	public void saveRefreshToken(String userid, String refreshToken) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userid", userid);
+		map.put("token", refreshToken);
+		memberMapper.saveRefreshToken(map);
+	}
+
+	@Override
+	public Object getRefreshToken(String userid) throws Exception {
+		return memberMapper.getRefreshToken(userid);
+	}
+
+	@Override
+	public void deleRefreshToken(String userid) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userid", userid);
+		map.put("token", null);
+		memberMapper.deleteRefreshToken(map);
+	}
+
+	@Override
+	public MemberDto getMember(String userId) throws Exception {
+		return memberMapper.getMember(userId);
 	}
 
 }
