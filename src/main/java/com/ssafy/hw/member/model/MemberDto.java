@@ -12,6 +12,8 @@ public class MemberDto {
 	private String userName;
 	@ApiModelProperty(value = "회원비밀번호")
 	private String userPwd;
+//	@ApiModelProperty(value="이메일  ")
+//	private String email;
 	@ApiModelProperty(value = "이메일아이디")
 	private String emailId;
 	@ApiModelProperty(value = "이메일도메인")
@@ -58,7 +60,12 @@ public class MemberDto {
 	public void setEmailDomain(String emailDomain) {
 		this.emailDomain = emailDomain;
 	}
-
+//public String getEmail() {
+//	return email;
+//}
+//public void setEmail() {
+//	
+//}
 	public String getJoinDate() {
 		return joinDate;
 	}

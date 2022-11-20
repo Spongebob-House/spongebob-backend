@@ -41,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int modifyMember(MemberDto memberDto) throws SQLException {
-		memberDto.setUserPwd(encryptPwd(memberDto.getUserPwd()));
+//		memberDto.setUserPwd(encryptPwd(memberDto.getUserPwd()));
 		return memberMapper.modifyMember(memberDto);
 	}
 

@@ -1,9 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
-<%@ include file="/WEB-INF/views/common/logincheck.jsp" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="root" value="${pageContext.request.contextPath}"/>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ include
+file="/WEB-INF/views/common/header.jsp" %> <%@ include file="/WEB-INF/views/common/logincheck.jsp"
+%> <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="root" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,15 +15,14 @@
     <link rel="stylesheet" href="./css/main.css" />
     <title>FIND HOME</title>
     <style>
-    .form-control:focus {
-    	color: #000 !important;
-    	box-shadow: none !important;
-    	 border-color: #ced4da;
-    }
+      .form-control:focus {
+        color: #000 !important;
+        box-shadow: none !important;
+        border-color: #ced4da;
+      }
     </style>
   </head>
   <body>
-   
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10 col-sm-12">
@@ -73,7 +70,7 @@
               <label for="emailid" class="form-label">이메일 : </label>
               <div class="input-group">
                 <input
-                	readonly
+                  readonly
                   type="text"
                   class="form-control"
                   id="emailid"
@@ -82,31 +79,32 @@
                 />
                 <span class="input-group-text">@</span>
                 <input
-                readonly
+                  readonly
                   class="form-control"
                   id="emaildomain"
                   name="emailDomain"
-                  placeholder="${userinfo.emailDomain}" 
+                  placeholder="${userinfo.emailDomain}"
                 />
               </div>
             </div>
             <div class="mb-3">
-	            <label for="userpwd" class="form-label">회원가입일 : </label>
-	            <input
-	                type="text"
-	                class="form-control"
-	                id="reg_date"
-	                name="reg_date"
-	                placeholder="${userinfo.joinDate}"
-	                readonly
-	            />
+              <label for="userpwd" class="form-label">회원가입일 : </label>
+              <input
+                type="text"
+                class="form-control"
+                id="reg_date"
+                name="reg_date"
+                placeholder="${userinfo.joinDate}"
+                readonly
+              />
             </div>
             <div class="col-auto text-center">
               <button type="button" id="btn-modify" class="btn btn-outline-primary mb-3">
                 정보 수정하기
               </button>
-              <button type="button" id="btn-account-delete"class="btn btn-outline-success mb-3">회원탈퇴하기</button>
-              
+              <button type="button" id="btn-account-delete" class="btn btn-outline-success mb-3">
+                회원탈퇴하기
+              </button>
             </div>
           </form>
         </div>
@@ -118,19 +116,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="/assets/js/mypage.js"></script>
     <script>
-    <c:if test="${!empty msg}">
-    	alert("${msg}");
-    </c:if>
-    document.querySelector("#btn-modify").addEventListener("click", function () {
-  	  location.href = "${root}/user/mypagemodify"; 
-  	});
-    document.querySelector("#btn-account-delete").addEventListener("click", function () {
-        var message = "정말로 탈퇴하시겠습니까?";
+      <c:if test="${!empty msg}">alert("${msg}");</c:if>;
+      document.querySelector('#btn-modify').addEventListener('click', function () {
+        location.href = '${root}/user/mypagemodify';
+      });
+      document.querySelector('#btn-account-delete').addEventListener('click', function () {
+        var message = '정말로 탈퇴하시겠습니까?';
         result = window.confirm(message);
         if (result) {
-            location.href = "${root}/user/delete"; 
+          location.href = '${root}/user/delete';
         }
-    });
+      });
     </script>
   </body>
 </html>
