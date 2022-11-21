@@ -48,7 +48,7 @@ public MapController(MapService mapService) {
     this.mapService = mapService;
 }
 @ApiOperation(value = "검색 리스트", notes = "사용자가 검색창에 검색한 단어를 기반으로 해당하는 리스트를 반환한다,", response = List.class)
-@GetMapping("/{text}")
+@GetMapping("/navi/{text}")
 private ResponseEntity<List<NaviDto>> navi(@PathVariable("text") @ApiParam(value = "검색어", required = true) String text) throws SQLException {
 	logger.debug("search call parameter {}", text);
 	List<NaviDto> searchList;
@@ -57,6 +57,20 @@ private ResponseEntity<List<NaviDto>> navi(@PathVariable("text") @ApiParam(value
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 	return new ResponseEntity<List<NaviDto>>(searchList, HttpStatus.OK);
+}
+
+@ApiOperation(value = "아파트 리스트", notes = "사용자가 보고 있는 지도에 보이는 아파트 리스트를 반환한다,", response = List.class)
+@PostMapping("/aptsearch")
+private ResponseEntity<List<MapDto>> aptSearch(@RequestBody Map<String,String> latLng) throws SQLException {
+	logger.debug("aptSearch call parameter {}", latLng);
+	
+	List<MapDto> searchList;
+	searchList = mapService.aptSearch(latLng);
+	
+	if (searchList.isEmpty()) {
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
+	}
+	return new ResponseEntity<List<MapDto>>(searchList, HttpStatus.OK);
 }
 
 @ApiOperation(value = "코로나 진료소 정보", notes = "코로나 선별진료소 정보를 반환한다,", response = List.class)
@@ -113,7 +127,23 @@ private ResponseEntity<String> addinter(@RequestBody InterDto interDto) throws S
 	return new ResponseEntity<String>(FAIL, HttpStatus.NOT_IMPLEMENTED);
 }
 
-@ApiOperation(value = "아파트 정보", notes = "인근 아파트 매매 정보를 반환한다.", response = List.class)
+@ApiOperation(value = "아파트 상세 거래 내역", notes = "아파트 상세 거래 내역을 반환한다.", response = String.class)
+@PostMapping("/detail")
+@Transactional
+private ResponseEntity<Map<String, Object>> detail(@RequestBody MapDto mapDto) throws SQLException{
+	Map<String, Object> Resultmap = new HashMap<String, Object>();
+	
+	logger.debug("detail call parameter {}", mapDto);
+	List<MapDto> dealList = mapService.detail(mapDto);
+	mapDto.setCoffee(mapService.getCoffeeDto(mapDto));
+    mapDto.setMetro(mapService.getMetroDto(mapDto));
+    Resultmap.put("dealList", dealList);
+    Resultmap.put("mapDto", mapDto);
+    return new ResponseEntity<Map<String, Object>>(Resultmap, HttpStatus.OK);
+}
+
+
+@ApiOperation(value = "아파트 정보", notes = "동별 아파트 정보를 반환한다.", response = List.class)
 @GetMapping("/search/{dong}/{year}/{month}")
 private ResponseEntity<List<MapDto>> search(@PathVariable("dong") @ApiParam(value = "동코드.", required = true) String dong, @PathVariable("year") @ApiParam(value = "연도", required = true) String year, @PathVariable("month") @ApiParam(value = "월", required = true) String month) throws SQLException {
     ArrayList<MapDto> mapDtoList;
@@ -122,10 +152,7 @@ private ResponseEntity<List<MapDto>> search(@PathVariable("dong") @ApiParam(valu
     map.put("month", month);
     map.put("dong", dong);
     mapDtoList = mapService.search(map);
-    for(MapDto mapDto:mapDtoList) {
-        mapDto.setCoffee(mapService.getCoffeeDto(mapDto));
-        mapDto.setMetro(mapService.getMetroDto(mapDto));
-    }
+
             
     if (mapDtoList.isEmpty()) {
         return new ResponseEntity(HttpStatus.NO_CONTENT);

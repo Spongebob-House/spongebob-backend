@@ -116,4 +116,15 @@ public class MapServiceImpl implements MapService {// 여기서 무엇을 하느
 		return mapMapper.navi(sb.toString());
 	}
 
+	@Override
+	public List<MapDto> aptSearch(Map<String, String> latLng) throws SQLException {
+		return mapMapper.aptSearch(latLng);
+	}
+
+	@Override
+	public List<MapDto> detail(MapDto mapDto) throws SQLException {
+		// TODO Auto-generated method stub
+		return mapMapper.detail(mapDto);
+	}
+
 }
