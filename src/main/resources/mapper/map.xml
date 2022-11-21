@@ -10,6 +10,13 @@
 		where concat(sidoName, gugunName, dongName) like #{text}
 		limit 0, 10;
 	</select>
+	
+	<select id="aptSearch" parameterType = "map" resultType="mapDto">
+		select *
+		from houseinfo
+		where lat between #{qa} and #{pa} and lng between #{ha} and #{oa}
+	
+	</select>
 	<select id="corona" parameterType="map" resultType="coronaDto">
 		select c.name, c.address, c.weekday, c.saterday, c.sunday, c.phonenumber, c.conv 
 		from corona c
@@ -44,13 +51,15 @@
 	</select>
 	
 	<select id="search" parameterType="map" resultType="mapDto">
-		select * from houseview 
+		select * from houseinfo
 		where dongCode = #{dong}
-		<if test="!year.equals('null') and !month.equals('null') and !year.equals('') and !month.equals('')">
-			and dealYear = #{year} and dealMonth = #{month} 
-		</if>
+		
+	</select>
+	
+	<select id="detail" parameterType="mapDto" resultType="mapDto">
+		select * from housedeal
+		where aptCode = #{aptCode}
 		order by dealYear desc, dealMonth desc
-		limit 20 
 	</select>
 	
 	<select id="getCoffee" parameterType="map" resultType="starBucksDto">
