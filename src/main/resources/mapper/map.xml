@@ -15,7 +15,7 @@
 		select *
 		from houseinfo
 		where lat between #{qa} and #{pa} and lng between #{ha} and #{oa}
-	
+	    limit 1000
 	</select>
 	<select id="corona" parameterType="map" resultType="coronaDto">
 		select c.name, c.address, c.weekday, c.saterday, c.sunday, c.phonenumber, c.conv 
