@@ -178,12 +178,13 @@ public class MemberController {
 	@ApiOperation(value = "마이페이지 수정", notes = "", response = Map.class)
 	@PutMapping("/")
 	public ResponseEntity<MemberDto> modifyMypage(
-			@RequestBody @ApiParam(value = "회원가입 시 필요한 회원정보", required = true) MemberDto memberDto) {
+			@RequestBody @ApiParam(value = "회원가입 시 필요한 회원정보", required = true) MemberDto memberDto) throws Exception {
 		logger.debug("mypage modify {}");
 //		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
 		try {
 			System.out.println(memberDto);
-			return new ResponseEntity(memberService.modifyMember(memberDto), HttpStatus.OK);
+			memberService.modifyMember(memberDto);
+			return new ResponseEntity(memberService.getMember(memberDto.getUserId()), HttpStatus.OK);
 		} catch (SQLException e) {
 			e.printStackTrace();
 //			model.addAttribute("msg", "마이페이지 수정 중 문제 발생 !");

@@ -41,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int modifyMember(MemberDto memberDto) throws SQLException {
-		memberDto.setUserPwd(encryptPwd(memberDto.getUserPwd()));
+//		memberDto.setUserPwd(encryptPwd(memberDto.getUserPwd()));
 		return memberMapper.modifyMember(memberDto);
 	}
 
@@ -53,7 +53,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public String findpw(MemberDto memberDto) throws SQLException {
 		String random = makeRand();
-		memberDto.setUserPwd(random);
+		memberDto.setUserPwd(encryptPwd(random));
 		if (memberMapper.findpw(memberDto) == 1) {
 			return random;
 		} else {
