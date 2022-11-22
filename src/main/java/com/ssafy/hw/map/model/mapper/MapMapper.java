@@ -36,5 +36,9 @@ public interface MapMapper {
 
 	List<NaviDto> navi(String string) throws SQLException;
 
+	List<MapDto> aptSearch(Map<String, String> latLng) throws SQLException;
+
+	List<MapDto> detail(MapDto mapDto) throws SQLException;
+
 	
 }
