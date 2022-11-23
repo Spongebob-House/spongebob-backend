@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -102,11 +103,11 @@ private ResponseEntity<List<HospitalDto>> hospital(@PathVariable("gugun") @ApiPa
 }
 
 @ApiOperation(value = "관심지역 삭제", notes = "선택한 관심 지역을 삭제한다.", response = String.class)
-@DeleteMapping("/inter/{userId}/{dong}")
-private ResponseEntity<String> delinter(@PathVariable("dong") @ApiParam(value = "동코드.", required = true) String dong, @PathVariable("userId") @ApiParam(value = "유저아이디.", required = true) String userId) throws SQLException {
+@DeleteMapping("/inter/{userId}/{aptCode}")
+private ResponseEntity<String> delinter(@PathVariable("aptCode") @ApiParam(value = "아파트코드.", required = true) String aptCode, @PathVariable("userId") @ApiParam(value = "유저아이디.", required = true) String userId) throws SQLException {
     Map<String, String> map = new HashMap<String, String>();
-    map.put("userid", userId);
-    map.put("dong", dong);
+    map.put("userId", userId);
+    map.put("aptCode", aptCode);
     logger.debug("delinter call parameter {}", map);
     if(mapService.delinter(map)) {
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
@@ -115,11 +116,9 @@ private ResponseEntity<String> delinter(@PathVariable("dong") @ApiParam(value = 
 }
 
 @ApiOperation(value = "관심지역 추가", notes = "선택한 관심 지역을 추가한다.", response = String.class)
-@PostMapping("/inter")
+@PutMapping("/inter")
 @Transactional
 private ResponseEntity<String> addinter(@RequestBody InterDto interDto) throws SQLException{
-    Map<String, String> map = new HashMap<String, String>();
-    
     logger.debug("addinter call parameter {}", interDto);
     if(mapService.addinter(interDto)) {
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
@@ -162,12 +161,12 @@ private ResponseEntity<List<MapDto>> search(@PathVariable("dong") @ApiParam(valu
 
 @ApiOperation(value = "관심 지역 정보", notes = "관심 지역 리스트를 반환한다.", response = List.class)
 @GetMapping("/inter/{userId}")
-private ResponseEntity<List<InterDto>> getinter(@PathVariable("userId") @ApiParam(value = "유저아이디", required = true) String userId) throws SQLException {
-	List<InterDto> interDtoList;
+private ResponseEntity<List<MapDto>> getinter(@PathVariable("userId") @ApiParam(value = "유저아이디", required = true) String userId) throws SQLException {
+	List<MapDto> interDtoList;
 	interDtoList = mapService.getInterDto(userId);
 	if (interDtoList.isEmpty()) {
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
-	return new ResponseEntity<List<InterDto>>(interDtoList, HttpStatus.OK);
+	return new ResponseEntity<List<MapDto>>(interDtoList, HttpStatus.OK);
 } 
 }
