@@ -15,7 +15,7 @@
 		select *
 		from houseinfo
 		where lat between #{qa} and #{pa} and lng between #{ha} and #{oa}
-	
+	    limit 1000
 	</select>
 	<select id="corona" parameterType="map" resultType="coronaDto">
 		select c.name, c.address, c.weekday, c.saterday, c.sunday, c.phonenumber, c.conv 
@@ -35,18 +35,17 @@
 	
 	<delete id="delinter" parameterType="map">
 		delete from inter_area
-		where userId = #{userid} and dongCode = #{dong}
+		where userId = #{userId} and aptCode = #{aptCode}
 	</delete>
 	
 	<insert id="addinter" parameterType="interDto">
-		insert into inter_area(userId, dongCode, dongName)
-		values(#{userId}, #{dongCode}, 
-		(select concat(sidoName,' ',IFNULL(gugunName,''),' ',IFNULL(dongName,'')) from dongcode 
-		where dongCode = #{dongCode}))
+		insert into inter_area(userId, aptCode)
+		values(#{userId}, #{aptCode}) 
 	</insert>
 	
-	<select id="getInterDto" parameterType="string" resultType="interDto">
-		select * from inter_area 
+	<select id="getInterDto" parameterType="string" resultType="mapDto">
+		select * from inter_area
+		natural join houseinfo 
 		where userId = #{userId}
 	</select>
 	

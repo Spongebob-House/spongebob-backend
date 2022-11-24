@@ -35,7 +35,7 @@ public class MapServiceImpl implements MapService {// 여기서 무엇을 하느
 	}
 
 	@Override
-	public ArrayList<InterDto> getInterDto(String userId) throws SQLException {
+	public ArrayList<MapDto> getInterDto(String userId) throws SQLException {
 		// TODO Auto-generated method stub
 		return mapMapper.getInterDto(userId);
 	}
