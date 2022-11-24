@@ -1,63 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	
+
 <mapper namespace="com.ssafy.hw.map.model.mapper.MapMapper">
 
+	<select id="navi" parameterType="string" resultType="naviDto">
+		select
+		dongCode, concat(sidoName, ' ', gugunName, ' ', dongName) as name
+		from dongcode
+		where concat(sidoName, gugunName, dongName) like #{text}
+		limit 0, 10;
+	</select>
 	<select id="corona" parameterType="map" resultType="coronaDto">
-		select c.name, c.address, c.weekday, c.saterday, c.sunday, c.phonenumber, c.conv 
+		select
+		c.name, c.address, c.weekday, c.saterday, c.sunday, c.phonenumber,
+		c.conv
 		from corona c
 		inner join (select * from dongcode where dongName is null) d
 		on (left(c.sido,2) = left(d.sidoName, 2) and c.gugun = d.gugunName)
 		where dongCode = #{gugun}
 	</select>
-	
-	<select id="hospital" parameterType="map" resultType="hospitalDto">
+
+	<select id="hospital" parameterType="map"
+		resultType="hospitalDto">
 		select h.name, h.address, h.phonenumber, h.type
-		from hospital h 
+		from
+		hospital h
 		inner join (select * from dongcode where dongName is null) d
-		on (h.sido = left(d.sidoName, 2) and h.gugun = d.gugunName)
-		where dongCode = #{gugun} 
+		on (h.sido =
+		left(d.sidoName, 2) and h.gugun = d.gugunName)
+		where dongCode =
+		#{gugun}
 	</select>
-	
+
 	<delete id="delinter" parameterType="map">
 		delete from inter_area
-		where userId = #{userid} and dongCode = #{dong}
+		where
+		userId = #{userid} and dongCode = #{dong}
 	</delete>
-	
+
 	<insert id="addinter" parameterType="interDto">
-		insert into inter_area(userId, dongCode, dongName)
-		values(#{userId}, #{dongCode}, 
-		(select concat(sidoName,' ',IFNULL(gugunName,''),' ',IFNULL(dongName,'')) from dongcode 
+		insert into
+		inter_area(userId, dongCode, dongName)
+		values(#{userId}, #{dongCode},
+		(select concat(sidoName,' ',IFNULL(gugunName,''),'
+		',IFNULL(dongName,'')) from dongcode
 		where dongCode = #{dongCode}))
 	</insert>
-	
-	<select id="getInterDto" parameterType="string" resultType="interDto">
-		select * from inter_area 
+
+	<select id="getInterDto" parameterType="string"
+		resultType="interDto">
+		select * from inter_area
 		where userId = #{userId}
 	</select>
-	
+
 	<select id="search" parameterType="map" resultType="mapDto">
-		select * from houseview 
+		select * from houseview
 		where dongCode = #{dong}
-		<if test="!year.equals('null') and !month.equals('null') and !year.equals('') and !month.equals('')">
-			and dealYear = #{year} and dealMonth = #{month} 
+		<if
+			test="!year.equals('null') and !month.equals('null') and !year.equals('') and !month.equals('')">
+			and dealYear = #{year} and dealMonth = #{month}
 		</if>
 		order by dealYear desc, dealMonth desc
-		limit 20 
+		limit 20
 	</select>
-	
-	<select id="getCoffee" parameterType="map" resultType="starBucksDto">
-		select * from starbucks 
+
+	<select id="getCoffee" parameterType="map"
+		resultType="starBucksDto">
+		select * from starbucks
 		order by st_distance_sphere(point(#{lng},#{lat}),point(lng,lat))
 		limit 1
 	</select>
 
 	<select id="getMetro" parameterType="map" resultType="metroDto">
-		select * from metro 
-		order by st_distance_sphere(point(#{lng},#{lat}),point(lng,lat)) 
-		limit 1 
+		select *
+		from metro
+		order by st_distance_sphere(point(#{lng},#{lat}),point(lng,lat))
+		limit 1
 	</select>
-	
-	
+
+
 </mapper>

@@ -23,6 +23,7 @@ public interface QnAService {
 	public boolean deleteArticle(int articleno) throws Exception;
 
 	public boolean writeMemo(MemoDto memoDto) throws Exception;
-
+	
+	public List<QnADto> qnaList(QnAParameterDto boardParameterDto) throws Exception;
 //	public MemoDto getMemo(int memono) throws Exception;
 }

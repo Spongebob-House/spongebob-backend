@@ -1,7 +1,9 @@
+
 package com.ssafy.hw.map.model.service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.ssafy.hw.map.model.CoronaDto;
@@ -9,6 +11,7 @@ import com.ssafy.hw.map.model.HospitalDto;
 import com.ssafy.hw.map.model.InterDto;
 import com.ssafy.hw.map.model.MapDto;
 import com.ssafy.hw.map.model.MetroDto;
+import com.ssafy.hw.map.model.NaviDto;
 import com.ssafy.hw.map.model.StarBucksDto;
 
 public interface MapService {
@@ -29,4 +32,7 @@ public interface MapService {
 
 	ArrayList<InterDto> getInterDto(String userId) throws SQLException;
 
+	List<NaviDto> navi(String text) throws SQLException;
+
 }
+

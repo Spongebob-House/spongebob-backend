@@ -55,6 +55,16 @@ public class QnAController {
 		logger.info("listArticle - 호출");
 		return new ResponseEntity<List<QnADto>>(qnaService.listArticle(qnaParameterDto), HttpStatus.OK);
 	}
+	
+	// qna 목록
+	@ApiOperation(value = "qna 글목록", notes = "모든 qna 정보를 반환한다.", response = List.class)
+	@GetMapping("/inquiry")
+	public ResponseEntity<List<QnADto>> qnaList(
+			@ApiParam(value = "qna 얻기위한 부가정보.", required = true) QnAParameterDto qnaParameterDto) throws Exception {
+		logger.info("listArticle - 호출");
+		return new ResponseEntity<List<QnADto>>(qnaService.listArticle(qnaParameterDto), HttpStatus.OK);
+	}
+
 
 	// 글 상세 보기
 	@ApiOperation(value = "게시판 글보기", notes = "글번호에 해당하는 게시글의 정보를 반환한다.", response = QnADto.class)

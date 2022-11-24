@@ -28,6 +28,13 @@ public class QnAServiceImpl implements QnAService {
 	}
 
 	@Override
+	public List<QnADto> qnaList(QnAParameterDto qnaParmeterDto) throws Exception {
+		int start = qnaParmeterDto.getPg() == 0 ? 0 : (qnaParmeterDto.getPg() - 1) * qnaParmeterDto.getSpp();
+		qnaParmeterDto.setStart(start);
+		return sqlSession.getMapper(QnAMapper.class).qnaList(qnaParmeterDto);
+	}
+
+	@Override
 	public List<QnADto> listArticle(QnAParameterDto qnaParmeterDto) throws Exception {
 		int start = qnaParmeterDto.getPg() == 0 ? 0 : (qnaParmeterDto.getPg() - 1) * qnaParmeterDto.getSpp();
 		qnaParmeterDto.setStart(start);
@@ -82,7 +89,5 @@ public class QnAServiceImpl implements QnAService {
 		}
 		return sqlSession.getMapper(QnAMapper.class).writeMemo(memoDto) == 1;
 	}
-
-
 
 }

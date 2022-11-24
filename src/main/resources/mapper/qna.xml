@@ -42,6 +42,27 @@
 		limit #{start}, #{spp}
 	</select>
 
+	<select id="qnaList" parameterType="map" resultType="qnaDto">
+		select articleno, userid, subject, content, hit,
+		case when
+		date_format(regtime, '%Y%m%d') = date_format(now(), '%Y%m%d')
+		then
+		date_format(regtime, '%H:%i:%s')
+		else date_format(regtime, '%y.%m.%d')
+		end regtime
+		from qna
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				where subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				where ${key} = #{word}
+			</if>
+		</if>
+		order by articleno desc
+		limit #{start}, #{spp}
+		where userid = #{userid}
+	</select>
 	<select id="getTotalCount" parameterType="map" resultType="int">
 		select count(articleno)
 		from qna
