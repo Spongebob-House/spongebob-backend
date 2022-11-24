@@ -128,6 +128,7 @@ public class BoardController {
 		if(list.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
+
 		return new ResponseEntity<List<BoardDto>>(list, HttpStatus.OK);
 
 //		} catch (Exception e) {
@@ -152,7 +153,7 @@ public class BoardController {
 	}
 
 	@ApiOperation(value = "공지사항 글 수정", notes = "공지사항 글을 수정한다.", response = String.class)
-	@PutMapping("/modify")
+	@PutMapping
 	public ResponseEntity<String> modify(@RequestBody BoardDto boardDto) throws Exception {
 		logger.debug("modify boardDto : {}", boardDto);
 		if(boardService.modifyArticle(boardDto)) {
