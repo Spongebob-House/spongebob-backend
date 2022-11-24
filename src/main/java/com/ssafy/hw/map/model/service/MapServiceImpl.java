@@ -89,7 +89,7 @@ public class MapServiceImpl implements MapService {// 여기서 무엇을 하느
 		return metro;
 	}
 
-	private int getDist(String lat1, String lng1, String lat2, String lng2) {
+	public int getDist(String lat1, String lng1, String lat2, String lng2) {
 		double lt1 = Double.parseDouble(lat1);
 		double ln1 = Double.parseDouble(lng1);
 		double lt2 = Double.parseDouble(lat2);
