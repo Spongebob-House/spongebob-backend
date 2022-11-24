@@ -22,14 +22,16 @@
 	</insert>
 
 	<select id="listArticle" parameterType="map" resultType="qnaDto">
-		select articleno, userid, subject, content, hit,
+		select q.articleno, q.userid, q.subject, q.content, q.hit,
 		case when
 		date_format(regtime, '%Y%m%d') = date_format(now(), '%Y%m%d')
 		then
 		date_format(regtime, '%H:%i:%s')
 		else date_format(regtime, '%y.%m.%d')
-		end regtime
-		from qna
+		end regtime, case when q.articleno = m.articleno then '답변완료' else '답변대기' end as `memo`
+		from qna q
+		left join memo m
+		on q.articleno = m.articleno
 		<if test="word != null and word != ''">
 			<if test="key == 'subject'">
 				where subject like concat('%', #{word}, '%')

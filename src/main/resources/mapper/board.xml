@@ -12,6 +12,7 @@
 		<result column="content" property="content"/>
 		<result column="hit" property="hit"/>
 		<result column="register_time" property="registerTime"/>
+		<result column="total" property="total"/>
 	</resultMap>
 	
 	<resultMap type="boardDto" id="viewArticle" extends="article">
@@ -52,7 +53,13 @@
 	</sql>
 
 	<select id="listArticle" parameterType="map" resultMap="article">
-		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name
+		select b.article_no, b.user_id, b.subject, b.content, b.hit, m.user_name, (select count(*) from board) as total,
+		case when
+		date_format(b.register_time, '%Y%m%d') = date_format(now(), '%Y%m%d')
+		then
+		date_format(b.register_time, '%H:%i:%s')
+		else date_format(b.register_time, '%y.%m.%d')
+		end as register_time
 		from board b, members m 
 		where b.user_id = m.user_id
 		<include refid="search"></include>
