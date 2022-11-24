@@ -53,7 +53,7 @@
 	</sql>
 
 	<select id="listArticle" parameterType="map" resultMap="article">
-		select b.article_no, b.user_id, b.subject, b.content, b.hit, m.user_name, count(article_no) as total,
+		select b.article_no, b.user_id, b.subject, b.content, b.hit, m.user_name, (select count(*) from board) as total,
 		case when
 		date_format(b.register_time, '%Y%m%d') = date_format(now(), '%Y%m%d')
 		then
