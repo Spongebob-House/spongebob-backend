@@ -177,7 +177,9 @@ public class MemberController {
 
 	@ApiOperation(value = "마이페이지 수정", notes = "", response = Map.class)
 	@PutMapping("/")
+
 	public ResponseEntity<Map<String, Object>> modifyMypage(
+
 			@RequestBody @ApiParam(value = "회원가입 시 필요한 회원정보", required = true) MemberDto memberDto) throws Exception {
 		logger.debug("mypage modify {}");
 //		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
