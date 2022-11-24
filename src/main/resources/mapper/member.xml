@@ -93,6 +93,6 @@
 	<update id="deleteRefreshToken" parameterType="map">
 		update members
 		set token = #{token, jdbcType=VARCHAR}
-		where user_id = #{userId}
+		where user_id = #{userid}
 	</update>
 </mapper>

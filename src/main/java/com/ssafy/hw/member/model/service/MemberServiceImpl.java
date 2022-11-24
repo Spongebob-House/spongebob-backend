@@ -116,11 +116,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void deleRefreshToken(String userid) throws Exception {
+	public boolean deleRefreshToken(String userid) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("userid", userid);
 		map.put("token", null);
-		memberMapper.deleteRefreshToken(map);
+		return memberMapper.deleteRefreshToken(map) == 1;
 	}
 
 	@Override
