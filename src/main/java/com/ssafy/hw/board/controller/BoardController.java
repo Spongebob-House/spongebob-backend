@@ -128,7 +128,6 @@ public class BoardController {
 		if(list.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
-
 		return new ResponseEntity<List<BoardDto>>(list, HttpStatus.OK);
 
 //		} catch (Exception e) {
