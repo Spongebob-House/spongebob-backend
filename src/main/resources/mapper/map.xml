@@ -21,6 +21,13 @@
 		and #{oa}
 		limit 1000
 	</select>
+	
+	<select id="aptSearch" parameterType = "map" resultType="mapDto">
+		select *
+		from houseinfo
+		where lat between #{qa} and #{pa} and lng between #{ha} and #{oa}
+	    limit 1000
+	</select>
 	<select id="corona" parameterType="map" resultType="coronaDto">
 		select
 		c.name, c.address, c.weekday, c.saterday, c.sunday, c.phonenumber,
@@ -48,28 +55,30 @@
 
 	<delete id="delinter" parameterType="map">
 		delete from inter_area
-		where
-		userId = #{userId} and aptCode = #{aptCode}
+		where userId = #{userId} and aptCode = #{aptCode}
 	</delete>
 
 	<insert id="addinter" parameterType="interDto">
-		insert into
-		inter_area(userId, aptCode)
-		values(#{userId}, #{aptCode})
+		insert into inter_area(userId, aptCode)
+		values(#{userId}, #{aptCode}) 
 	</insert>
-
-	<select id="getInterDto" parameterType="string"
-		resultType="mapDto">
+	
+	<select id="getInterDto" parameterType="string" resultType="mapDto">
 		select * from inter_area
-		natural join houseinfo
+		natural join houseinfo 
 		where userId = #{userId}
 	</select>
 
 	<select id="search" parameterType="map" resultType="mapDto">
-		select * from
-		houseinfo
+		select * from houseinfo
 		where dongCode = #{dong}
-
+		
+	</select>
+	
+	<select id="detail" parameterType="mapDto" resultType="mapDto">
+		select * from housedeal
+		where aptCode = #{aptCode}
+		order by dealYear desc, dealMonth desc
 	</select>
 
 	<select id="detail" parameterType="mapDto" resultType="mapDto">

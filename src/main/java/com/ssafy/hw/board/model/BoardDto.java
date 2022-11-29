@@ -1,3 +1,4 @@
+
 package com.ssafy.hw.board.model;
 
 import java.util.List;
@@ -22,6 +23,15 @@ public class BoardDto {
 	private String registerTime;
 	@ApiModelProperty(value = "파일 정보")
 	private List<FileInfoDto> fileInfos;
+	private long total;
+
+	public long getTotal() {
+		return total;
+	}
+
+	public void setTotal(long total) {
+		this.total = total;
+	}
 
 	public int getArticleNo() {
 		return articleNo;

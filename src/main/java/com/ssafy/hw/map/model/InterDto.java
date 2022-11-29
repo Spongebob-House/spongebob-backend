@@ -23,5 +23,6 @@ public class InterDto {
 	public void setAptCode(String aptCode) {
 		this.aptCode = aptCode;
 	}
+	
 
 }
