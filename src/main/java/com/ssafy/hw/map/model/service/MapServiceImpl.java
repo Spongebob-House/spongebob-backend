@@ -35,7 +35,7 @@ public class MapServiceImpl implements MapService {// 여기서 무엇을 하느
 	}
 
 	@Override
-	public ArrayList<InterDto> getInterDto(String userId) throws SQLException {
+	public ArrayList<MapDto> getInterDto(String userId) throws SQLException {
 		// TODO Auto-generated method stub
 		return mapMapper.getInterDto(userId);
 	}
@@ -89,7 +89,7 @@ public class MapServiceImpl implements MapService {// 여기서 무엇을 하느
 		return metro;
 	}
 
-	private int getDist(String lat1, String lng1, String lat2, String lng2) {
+	public int getDist(String lat1, String lng1, String lat2, String lng2) {
 		double lt1 = Double.parseDouble(lat1);
 		double ln1 = Double.parseDouble(lng1);
 		double lt2 = Double.parseDouble(lat2);
@@ -114,6 +114,17 @@ public class MapServiceImpl implements MapService {// 여기서 무엇을 하느
 			
 		}
 		return mapMapper.navi(sb.toString());
+	}
+
+	@Override
+	public List<MapDto> aptSearch(Map<String, String> latLng) throws SQLException {
+		return mapMapper.aptSearch(latLng);
+	}
+
+	@Override
+	public List<MapDto> detail(MapDto mapDto) throws SQLException {
+		// TODO Auto-generated method stub
+		return mapMapper.detail(mapDto);
 	}
 
 }

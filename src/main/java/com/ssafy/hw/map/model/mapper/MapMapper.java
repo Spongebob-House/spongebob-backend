@@ -21,7 +21,7 @@ public interface MapMapper {
 
 	ArrayList<MapDto> search(Map<String, String> map) throws SQLException;
 
-	ArrayList<InterDto> getInterDto(String userId) throws SQLException;
+	ArrayList<MapDto> getInterDto(String userId) throws SQLException;
 
 	int addinter(InterDto interDto) throws SQLException;
 
@@ -37,4 +37,9 @@ public interface MapMapper {
 
 	List<NaviDto> navi(String string) throws SQLException;
 
+	List<MapDto> aptSearch(Map<String, String> latLng) throws SQLException;
+
+	List<MapDto> detail(MapDto mapDto) throws SQLException;
+
+	
 }

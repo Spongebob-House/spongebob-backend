@@ -9,9 +9,7 @@ public class InterDto {
 	@ApiModelProperty(value = "")
 	private String userId;
 	@ApiModelProperty(value = "")
-	private String dongCode;
-	@ApiModelProperty(value = "")
-	private String dongName;
+	private String aptCode;
 	
 	public String getUserId() {
 		return userId;
@@ -19,19 +17,11 @@ public class InterDto {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getDongCode() {
-		return dongCode;
+	public String getAptCode() {
+		return aptCode;
 	}
-	public void setDongCode(String dongCode) {
-		this.dongCode = dongCode;
+	public void setAptCode(String aptCode) {
+		this.aptCode = aptCode;
 	}
-	public String getDongName() {
-		return dongName;
-	}
-	public void setDongName(String dongName) {
-		this.dongName = dongName;
-	}
-	
-	
 
 }

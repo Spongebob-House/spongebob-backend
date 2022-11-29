@@ -30,9 +30,13 @@ public interface MapService {
 
 	MetroDto getMetroDto(MapDto mapDto) throws SQLException;
 
-	ArrayList<InterDto> getInterDto(String userId) throws SQLException;
+	List<MapDto> getInterDto(String userId) throws SQLException;
 
 	List<NaviDto> navi(String text) throws SQLException;
+
+	List<MapDto> aptSearch(Map<String, String> latLng) throws SQLException;
+
+	List<MapDto> detail(MapDto mapDto) throws SQLException;
 
 }
 

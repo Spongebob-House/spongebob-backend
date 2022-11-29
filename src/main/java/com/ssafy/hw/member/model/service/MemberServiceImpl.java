@@ -53,7 +53,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public String findpw(MemberDto memberDto) throws SQLException {
 		String random = makeRand();
-		memberDto.setUserPwd(random);
+		memberDto.setUserPwd(encryptPwd(random));
 		if (memberMapper.findpw(memberDto) == 1) {
 			return random;
 		} else {
@@ -116,11 +116,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void deleRefreshToken(String userid) throws Exception {
+	public boolean deleRefreshToken(String userid) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("userid", userid);
 		map.put("token", null);
-		memberMapper.deleteRefreshToken(map);
+		return memberMapper.deleteRefreshToken(map) == 1;
 	}
 
 	@Override

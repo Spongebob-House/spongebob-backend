@@ -87,15 +87,13 @@
 
 	<update id="saveRefreshToken" parameterType="map">
 		update members
-		set
-		token = #{token}
-		where user_id = #{userId}
+		set token = #{token}
+		where user_id = #{userid}
 	</update>
 
 	<update id="deleteRefreshToken" parameterType="map">
 		update members
-		set
-		token = #{token, jdbcType=VARCHAR}
-		where user_id = #{userId}
+		set token = #{token, jdbcType=VARCHAR}
+		where user_id = #{userid}
 	</update>
 </mapper>

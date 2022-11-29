@@ -7,17 +7,29 @@
 	<select id="navi" parameterType="string" resultType="naviDto">
 		select
 		dongCode, concat(sidoName, ' ', gugunName, ' ', dongName) as name
-		from dongcode
+		from
+		dongcode
 		where concat(sidoName, gugunName, dongName) like #{text}
-		limit 0, 10;
+		limit
+		0, 10;
+	</select>
+
+	<select id="aptSearch" parameterType="map" resultType="mapDto">
+		select *
+		from houseinfo
+		where lat between #{qa} and #{pa} and lng between #{ha}
+		and #{oa}
+		limit 1000
 	</select>
 	<select id="corona" parameterType="map" resultType="coronaDto">
 		select
 		c.name, c.address, c.weekday, c.saterday, c.sunday, c.phonenumber,
 		c.conv
 		from corona c
-		inner join (select * from dongcode where dongName is null) d
-		on (left(c.sido,2) = left(d.sidoName, 2) and c.gugun = d.gugunName)
+		inner join (select * from dongcode where dongName
+		is null) d
+		on (left(c.sido,2) = left(d.sidoName, 2) and c.gugun =
+		d.gugunName)
 		where dongCode = #{gugun}
 	</select>
 
@@ -29,53 +41,58 @@
 		inner join (select * from dongcode where dongName is null) d
 		on (h.sido =
 		left(d.sidoName, 2) and h.gugun = d.gugunName)
-		where dongCode =
+		where
+		dongCode =
 		#{gugun}
 	</select>
 
 	<delete id="delinter" parameterType="map">
 		delete from inter_area
 		where
-		userId = #{userid} and dongCode = #{dong}
+		userId = #{userId} and aptCode = #{aptCode}
 	</delete>
 
 	<insert id="addinter" parameterType="interDto">
 		insert into
-		inter_area(userId, dongCode, dongName)
-		values(#{userId}, #{dongCode},
-		(select concat(sidoName,' ',IFNULL(gugunName,''),'
-		',IFNULL(dongName,'')) from dongcode
-		where dongCode = #{dongCode}))
+		inter_area(userId, aptCode)
+		values(#{userId}, #{aptCode})
 	</insert>
 
 	<select id="getInterDto" parameterType="string"
-		resultType="interDto">
+		resultType="mapDto">
 		select * from inter_area
+		natural join houseinfo
 		where userId = #{userId}
 	</select>
 
 	<select id="search" parameterType="map" resultType="mapDto">
-		select * from houseview
+		select * from
+		houseinfo
 		where dongCode = #{dong}
-		<if
-			test="!year.equals('null') and !month.equals('null') and !year.equals('') and !month.equals('')">
-			and dealYear = #{year} and dealMonth = #{month}
-		</if>
-		order by dealYear desc, dealMonth desc
-		limit 20
+
+	</select>
+
+	<select id="detail" parameterType="mapDto" resultType="mapDto">
+		select *
+		from housedeal
+		where aptCode = #{aptCode}
+		order by dealYear desc,
+		dealMonth desc
 	</select>
 
 	<select id="getCoffee" parameterType="map"
 		resultType="starBucksDto">
 		select * from starbucks
-		order by st_distance_sphere(point(#{lng},#{lat}),point(lng,lat))
+		order by
+		st_distance_sphere(point(#{lng},#{lat}),point(lng,lat))
 		limit 1
 	</select>
 
 	<select id="getMetro" parameterType="map" resultType="metroDto">
 		select *
 		from metro
-		order by st_distance_sphere(point(#{lng},#{lat}),point(lng,lat))
+		order by
+		st_distance_sphere(point(#{lng},#{lat}),point(lng,lat))
 		limit 1
 	</select>
 
